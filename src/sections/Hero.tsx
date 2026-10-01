@@ -106,7 +106,7 @@ export default function Hero() {
                 onClick={(e) => { e.preventDefault(); document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" }); }}
               >
                 Conversemos sobre tu empresa
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
               </a>
               <a
                 href="#que-hacemos"
@@ -115,6 +115,7 @@ export default function Hero() {
               >
                 Conoce nuestro enfoque
               </a>
+            </div>
           </div>
 
           {/* RIGHT: Image */}
