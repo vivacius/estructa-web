@@ -447,35 +447,6 @@ export default function HeroCanvas() {
           ctx.restore();
         }
 
-        // Refined Label Badge
-        if (node.label && width > 768) {
-          ctx.save();
-          ctx.font = "600 10px 'Inter', sans-serif";
-          const metrics = ctx.measureText(node.label);
-          const bw = metrics.width + 16;
-          const bh = 18;
-          const bx = node.x - bw / 2;
-          const by = node.y - radius - bh - 6;
-
-          // Frosted badge backing
-          ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
-          ctx.strokeStyle = "rgba(184, 149, 42, 0.35)";
-          ctx.lineWidth = 1;
-          ctx.shadowColor = "rgba(9, 21, 35, 0.08)";
-          ctx.shadowBlur = 8;
-          ctx.beginPath();
-          ctx.roundRect(bx, by, bw, bh, 5);
-          ctx.fill();
-          ctx.stroke();
-
-          // Text
-          ctx.shadowBlur = 0;
-          ctx.fillStyle = "#091523";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(node.label, node.x, by + bh / 2);
-          ctx.restore();
-        }
       });
 
       // --- 7. AMBIENT MOUSE SPOTLIGHT GLOW ---

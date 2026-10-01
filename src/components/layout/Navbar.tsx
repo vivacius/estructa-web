@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -78,16 +78,16 @@ export default function Navbar() {
                 href={link.href}
                 onClick={(e) => handleNav(e, link.href)}
                 style={{
-                  color: "rgba(240,237,232,0.85)",
-                  fontSize: "0.8rem",
-                  fontWeight: 500,
+                  color: scrolled ? "rgba(240,237,232,0.9)" : "var(--navy-deepest)",
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   transition: "color 0.2s",
                   position: "relative",
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(240,237,232,0.85)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = scrolled ? "rgba(240,237,232,0.9)" : "var(--navy-deepest)")}
               >
                 {link.label}
               </a>
