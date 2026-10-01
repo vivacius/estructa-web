@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -40,9 +40,17 @@ export default function Footer() {
           </div>
           <div>
             <h4 style={{ color: "var(--gold-mid)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600, marginBottom: "1rem" }}>Contacto</h4>
-            <p style={{ color: "var(--text-muted-dark)", fontSize: "0.875rem", lineHeight: 1.8 }}>
-              Información de contacto<br/>próximamente disponible.
+            <p style={{ color: "var(--text-muted-dark)", fontSize: "0.875rem", lineHeight: 1.8, marginBottom: "0.5rem" }}>
+              Atención directa y diagnóstico:
             </p>
+            <a
+              href="https://wa.me/573013555173"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--ivory)", fontSize: "0.875rem", display: "inline-flex", alignItems: "center", gap: "0.4rem", textDecoration: "none" }}
+            >
+              <span style={{ color: "#25D366" }}>●</span> WhatsApp: +57 301 355 5173
+            </a>
           </div>
         </div>
         <div style={{

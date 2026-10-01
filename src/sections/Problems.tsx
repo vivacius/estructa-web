@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useRef, useState } from "react";
 
 const phrases = [
@@ -73,7 +73,6 @@ export default function Problems() {
             margin: "0 auto",
           }}>
             <span style={{
-              fontSize: "clamp(1.1rem, 1.5vw, 1.5rem)",
               color: "var(--text-muted-light)",
               fontFamily: "var(--font-display)",
               fontStyle: "italic",
