@@ -94,27 +94,34 @@ export default function Perspectives() {
         />
       </div>
 
-      <div className="container" style={{ position: "relative", zIndex: 2 }}>
-        {/* Compact Header */}
-        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 2rem" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.45rem",
-              background: "rgba(184,149,42,0.15)",
-              border: "1px solid rgba(184,149,42,0.35)",
-              borderRadius: "9999px",
-              padding: "0.25rem 0.85rem",
-              marginBottom: "0.75rem",
-            }}
-          >
-            <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--gold-mid)" }} />
-            <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold-mid)" }}>
-              QUÉ HACEMOS
-            </span>
-          </div>
+      {/* Top Edge Transition Ramp from light section above */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "70px",
+          background: "linear-gradient(to bottom, #F2EDE3 0%, rgba(9,21,35,0.65) 50%, rgba(9,21,35,0.95) 100%)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: "5%",
+          right: "5%",
+          height: "1px",
+          background: "linear-gradient(90deg, transparent, rgba(184,149,42,0.35), transparent)",
+          zIndex: 2,
+        }}
+      />
 
+      <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "0.5rem" }}>
+        {/* Compact Header */}
+        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 1.75rem" }}>
           <h2
             className="text-display-md"
             style={{

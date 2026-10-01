@@ -49,7 +49,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               style={{ color: "var(--ivory)", fontSize: "0.875rem", display: "inline-flex", alignItems: "center", gap: "0.4rem", textDecoration: "none" }}
             >
-              <span style={{ color: "#25D366" }}>●</span> WhatsApp: +57 301 355 5173
+              <span style={{ color: "#25D366" }}>●</span> Canal de WhatsApp Directo
             </a>
           </div>
         </div>

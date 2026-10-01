@@ -49,21 +49,10 @@ export default function Problems() {
         position: "relative",
       }}
     >
-      {/* Subtle background accent */}
-      <div style={{
-        position: "absolute",
-        top: 0, left: 0, right: 0,
-        height: "2px",
-        background: "linear-gradient(90deg, transparent, var(--gold-mid), transparent)",
-      }} />
+      {/* Dynamic Animated Kinetic Divider */}
+      <div className="kinetic-divider" style={{ position: "absolute", top: 0, left: 0 }} />
 
-      <div className="container">
-        {/* Section label */}
-        <div style={{ textAlign: "center", marginBottom: "1.75rem" }}
-          className={`reveal ${visible ? "visible" : ""}`}>
-          <span className="text-label text-muted-l">El dilema empresarial</span>
-          <span className="gold-line" style={{ margin: "0.5rem auto 0" }} />
-        </div>
+      <div className="container" style={{ paddingTop: "1rem" }}>
 
         {/* Rotating phrase */}
         <div style={{ textAlign: "center", minHeight: "200px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>

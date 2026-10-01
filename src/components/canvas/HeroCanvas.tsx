@@ -212,6 +212,12 @@ export default function HeroCanvas() {
       };
     }
 
+    // Roaming Autonomous Logo State across entire screen
+    let logoX = width * 0.5;
+    let logoY = height * 0.38;
+    let logoVx = 0.55;
+    let logoVy = 0.3;
+
     canvas.addEventListener("click", handleClick);
 
     handleResize();
@@ -227,45 +233,73 @@ export default function HeroCanvas() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // --- DYNAMIC FLOATING LOGO WATERMARK (UPPER HORIZON) ---
+      // --- MONUMENTAL ROAMING LOGO WATERMARK ACROSS THE SCREEN ---
       if (logoLoaded && logoImg && logoImg.width > 0) {
         ctx.save();
-        const logoTargetWidth = Math.min(width * 0.38, 380);
+        // Much larger presence
+        const logoTargetWidth = Math.min(width * 0.68, 740);
         const logoAspectRatio = logoImg.height / logoImg.width;
         const logoTargetHeight = logoTargetWidth * logoAspectRatio;
 
-        // Mouse Parallax & Smooth Floating Levitation
-        const mouseShiftX = mouse.active ? (mouse.x - width / 2) * 0.025 : 0;
-        const mouseShiftY = mouse.active ? (mouse.y - height / 2) * 0.025 : 0;
-        const floatY = Math.sin(time * 0.9) * 10;
-        const centerX = width / 2 + mouseShiftX;
-        const centerY = Math.max(100, height * 0.21) + floatY + mouseShiftY;
+        // Smooth continuous wandering motion across canvas
+        logoX += logoVx;
+        logoY += logoVy;
 
-        // Dynamic breathing and subtle tilt
-        const breathe = 1 + Math.sin(time * 0.7) * 0.03;
-        const tilt = Math.sin(time * 0.45) * 0.015;
+        // Gentle bounds bounce
+        const padX = logoTargetWidth * 0.35;
+        const padY = logoTargetHeight * 0.45;
+        if (logoX < padX) {
+          logoX = padX;
+          logoVx = Math.abs(logoVx);
+        } else if (logoX > width - padX) {
+          logoX = width - padX;
+          logoVx = -Math.abs(logoVx);
+        }
 
-        // Pulsing Gold Ambient Aura
-        const auraRadius = logoTargetWidth * (0.65 + Math.sin(time) * 0.05);
-        const aura = ctx.createRadialGradient(
-          centerX,
-          centerY,
-          10,
-          centerX,
-          centerY,
-          auraRadius
+        if (logoY < padY) {
+          logoY = padY;
+          logoVy = Math.abs(logoVy);
+        } else if (logoY > height - padY) {
+          logoY = height - padY;
+          logoVy = -Math.abs(logoVy);
+        }
+
+        // Magnetic mouse interaction
+        if (mouse.active) {
+          const mdx = mouse.x - logoX;
+          const mdy = mouse.y - logoY;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 350 && mdist > 20) {
+            logoX += (mdx / mdist) * 0.9;
+            logoY += (mdy / mdist) * 0.9;
+          }
+        }
+
+        // Dynamic breathing & fluid levitation
+        const breathe = 1 + Math.sin(time * 0.65) * 0.035;
+        const tilt = Math.sin(time * 0.4) * 0.02;
+
+        // Glowing Ambient Radial Halo
+        const haloR = logoTargetWidth * 0.55;
+        const halo = ctx.createRadialGradient(
+          logoX,
+          logoY,
+          20,
+          logoX,
+          logoY,
+          haloR
         );
-        aura.addColorStop(0, "rgba(184, 149, 42, 0.16)");
-        aura.addColorStop(0.5, "rgba(201, 168, 76, 0.06)");
-        aura.addColorStop(1, "rgba(255, 255, 255, 0)");
-        ctx.fillStyle = aura;
+        halo.addColorStop(0, "rgba(184, 149, 42, 0.18)");
+        halo.addColorStop(0.5, "rgba(201, 168, 76, 0.06)");
+        halo.addColorStop(1, "rgba(255, 255, 255, 0)");
+        ctx.fillStyle = halo;
         ctx.beginPath();
-        ctx.arc(centerX, centerY, auraRadius, 0, Math.PI * 2);
+        ctx.arc(logoX, logoY, haloR, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw animated watermark logo
-        ctx.globalAlpha = 0.095;
-        ctx.translate(centerX, centerY);
+        // Draw monumental roaming watermark logo
+        ctx.globalAlpha = 0.088;
+        ctx.translate(logoX, logoY);
         ctx.rotate(tilt);
         ctx.scale(breathe, breathe);
         ctx.drawImage(

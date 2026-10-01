@@ -51,6 +51,31 @@ export default function ExternalTeam() {
         }} />
       </div>
 
+      {/* Top Edge Transition Ramp */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "60px",
+          background: "linear-gradient(to bottom, #FEFCF8 0%, rgba(9,21,35,0.7) 50%, rgba(9,21,35,0.95) 100%)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: "5%",
+          right: "5%",
+          height: "1px",
+          background: "linear-gradient(90deg, transparent, rgba(184,149,42,0.35), transparent)",
+          zIndex: 2,
+        }}
+      />
+
       <div className="container" style={{ position: "relative", zIndex: 2, padding: "clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3rem)" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
           {/* Left */}
@@ -61,9 +86,6 @@ export default function ExternalTeam() {
               transition: "opacity 0.7s ease, transform 0.7s ease",
             }}
           >
-            <span className="text-label" style={{ color: "var(--gold-mid)", display: "block", marginBottom: "1.25rem" }}>
-              El equipo que necesita tu empresa
-            </span>
             <h2 className="text-display-lg" style={{ color: "var(--ivory)", marginBottom: "1.5rem" }}>
               Una pyme no necesita<br />
               <span style={{ color: "var(--gold-mid)" }}>contratar cinco departamentos.</span>

@@ -40,8 +40,8 @@ export default function Technology() {
         overflow: "hidden",
       }}
     >
-      {/* Subtle top border */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(184,149,42,0.3), transparent)" }} />
+      {/* Top Edge Transition Line */}
+      <div style={{ position: "absolute", top: 0, left: "5%", right: "5%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(184,149,42,0.35), transparent)" }} />
 
       <div className="container">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
@@ -53,8 +53,6 @@ export default function Technology() {
               transition: "opacity 0.7s ease, transform 0.7s ease",
             }}
           >
-            <span className="text-label text-muted-l" style={{ display: "block", marginBottom: "1.25rem" }}>Nuestra visión tecnológica</span>
-
             <h2 className="text-display-lg text-navy" style={{ marginBottom: "1.5rem" }}>
               No empezamos preguntando<br />
               <span style={{ color: "var(--gold-primary)" }}>qué software vender.</span>
