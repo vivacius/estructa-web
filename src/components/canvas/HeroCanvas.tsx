@@ -227,38 +227,46 @@ export default function HeroCanvas() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // --- DIFFUSED LOGO WATERMARK ---
+      // --- DYNAMIC FLOATING LOGO WATERMARK (UPPER HORIZON) ---
       if (logoLoaded && logoImg && logoImg.width > 0) {
         ctx.save();
-        const logoTargetWidth = Math.min(width * 0.52, 540);
+        const logoTargetWidth = Math.min(width * 0.38, 380);
         const logoAspectRatio = logoImg.height / logoImg.width;
         const logoTargetHeight = logoTargetWidth * logoAspectRatio;
-        const centerX = width / 2;
-        const centerY = height * 0.42;
 
-        // Subtle breathing scale
-        const breathe = 1 + Math.sin(time * 0.6) * 0.012;
+        // Mouse Parallax & Smooth Floating Levitation
+        const mouseShiftX = mouse.active ? (mouse.x - width / 2) * 0.025 : 0;
+        const mouseShiftY = mouse.active ? (mouse.y - height / 2) * 0.025 : 0;
+        const floatY = Math.sin(time * 0.9) * 10;
+        const centerX = width / 2 + mouseShiftX;
+        const centerY = Math.max(100, height * 0.21) + floatY + mouseShiftY;
 
-        // Radial gold ambient aura behind watermark
+        // Dynamic breathing and subtle tilt
+        const breathe = 1 + Math.sin(time * 0.7) * 0.03;
+        const tilt = Math.sin(time * 0.45) * 0.015;
+
+        // Pulsing Gold Ambient Aura
+        const auraRadius = logoTargetWidth * (0.65 + Math.sin(time) * 0.05);
         const aura = ctx.createRadialGradient(
           centerX,
           centerY,
           10,
           centerX,
           centerY,
-          logoTargetWidth * 0.6
+          auraRadius
         );
-        aura.addColorStop(0, "rgba(184, 149, 42, 0.09)");
-        aura.addColorStop(0.5, "rgba(201, 168, 76, 0.03)");
+        aura.addColorStop(0, "rgba(184, 149, 42, 0.16)");
+        aura.addColorStop(0.5, "rgba(201, 168, 76, 0.06)");
         aura.addColorStop(1, "rgba(255, 255, 255, 0)");
         ctx.fillStyle = aura;
         ctx.beginPath();
-        ctx.arc(centerX, centerY, logoTargetWidth * 0.6, 0, Math.PI * 2);
+        ctx.arc(centerX, centerY, auraRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw diffused logo watermark
-        ctx.globalAlpha = 0.07;
+        // Draw animated watermark logo
+        ctx.globalAlpha = 0.095;
         ctx.translate(centerX, centerY);
+        ctx.rotate(tilt);
         ctx.scale(breathe, breathe);
         ctx.drawImage(
           logoImg,

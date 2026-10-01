@@ -72,49 +72,7 @@ export default function Hero() {
           maxWidth: "1040px",
         }}
       >
-        {/* Step 1: Minimalist Executive Eyebrow */}
-        <div
-          style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? "translateY(0)" : "translateY(16px)",
-            transition: "opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.65rem",
-            background: "rgba(255, 255, 255, 0.9)",
-            border: "1px solid rgba(184, 149, 42, 0.3)",
-            boxShadow: "0 4px 20px rgba(184, 149, 42, 0.08)",
-            borderRadius: "9999px",
-            padding: "0.42rem 1.25rem",
-            marginBottom: "2rem",
-            backdropFilter: "blur(12px)",
-          }}
-        >
-          <span
-            style={{
-              width: "7px",
-              height: "7px",
-              borderRadius: "50%",
-              background: "#B8952A",
-              boxShadow: "0 0 10px #B8952A",
-              animation: "pulse-gold 2s infinite",
-              display: "inline-block",
-            }}
-          />
-          <span
-            style={{
-              fontSize: "0.76rem",
-              fontWeight: 600,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--navy-deepest)",
-            }}
-          >
-            ESTRUCTA · SOLUCIONES EMPRESARIALES
-          </span>
-        </div>
-
-        {/* Step 2: Monumental Display Headline */}
+        {/* Main Display Headline */}
         <h1
           className="text-display-xl"
           style={{
@@ -251,26 +209,6 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Subtle Canvas Interaction Hint */}
-        <div
-          style={{
-            marginTop: "3rem",
-            opacity: mounted ? 0.65 : 0,
-            transition: "opacity 1s ease 0.9s",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontSize: "0.72rem",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "var(--navy-mid)",
-            pointerEvents: "none",
-          }}
-        >
-          <span style={{ color: "var(--gold-mid)" }}>✦</span>
-          <span>Interacción horizontal dinámica · Haz clic o mueve el cursor</span>
-          <span style={{ color: "var(--gold-mid)" }}>✦</span>
-        </div>
       </div>
 
       {/* 2. DYNAMIC BOTTOM STREAM TICKER */}

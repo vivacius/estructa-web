@@ -2,27 +2,75 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-const metrics = [
-  { label: "Legal", value: 68, status: "warn", statusLabel: "Requiere atención" },
-  { label: "Contable / Tributario", value: 76, status: "ok", statusLabel: "Adecuado" },
-  { label: "Financiero / Gerencial", value: 42, status: "crit", statusLabel: "Prioritario" },
-  { label: "Procesos", value: 51, status: "warn", statusLabel: "Requiere atención" },
-  { label: "Datos & Tecnología", value: 36, status: "crit", statusLabel: "Prioritario" },
-];
+interface AuditTrack {
+  id: string;
+  name: string;
+  score: number;
+  status: "crit" | "warn" | "ok";
+  statusLabel: string;
+  finding: string;
+  solution: string;
+}
 
-const statusColors = { ok: "#4ade80", warn: "#facc15", crit: "#f87171" };
-const statusBg = { ok: "rgba(34,197,94,0.12)", warn: "rgba(234,179,8,0.12)", crit: "rgba(239,68,68,0.12)" };
-const statusBorder = { ok: "rgba(34,197,94,0.3)", warn: "rgba(234,179,8,0.3)", crit: "rgba(239,68,68,0.3)" };
-const statusDot = { ok: "●", warn: "●", crit: "●" };
+const auditTracks: AuditTrack[] = [
+  {
+    id: "legal",
+    name: "Legal & Contratos",
+    score: 48,
+    status: "crit",
+    statusLabel: "Riesgo Crítico",
+    finding: "Contratos ambiguos, acuerdos verbales con socios y contingencias laborales.",
+    solution: "Auditoría legal express y blindaje contractual societario.",
+  },
+  {
+    id: "financiero",
+    name: "Finanzas & Caja",
+    score: 42,
+    status: "crit",
+    statusLabel: "Prioritario",
+    finding: "Se vende pero no se conoce el margen real; la caja se administra al día.",
+    solution: "Modelo de flujo de caja semanal y control presupuestal estricto.",
+  },
+  {
+    id: "costos",
+    name: "Costos & Márgenes",
+    score: 55,
+    status: "warn",
+    statusLabel: "Atención",
+    finding: "Líneas de negocio deficitarias subsidiadas por las pocas rentables.",
+    solution: "Estructura de costos unitarios y política de márgenes claros.",
+  },
+  {
+    id: "procesos",
+    name: "Operación & Procesos",
+    score: 51,
+    status: "warn",
+    statusLabel: "Atención",
+    finding: "Fuerte dependencia del dueño; los procesos rutinarios no están estandarizados.",
+    solution: "Manuales operativos clave y delegación estructurada.",
+  },
+  {
+    id: "datos",
+    name: "Datos & Reportes",
+    score: 36,
+    status: "crit",
+    statusLabel: "Prioritario",
+    finding: "Múltiples Excels aislados; decisiones tomadas a ciegas con retraso de semanas.",
+    solution: "Automatización de reportes e integración de dashboard directivo.",
+  },
+];
 
 export default function Diagnosis() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
-  const [bars, setBars] = useState(metrics.map(() => 0));
+  const [selectedTrack, setSelectedTrack] = useState<number>(0);
+  const [animatedScores, setAnimatedScores] = useState<number[]>(auditTracks.map(() => 0));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.15 }
     );
     if (ref.current) observer.observe(ref.current);
@@ -31,172 +79,256 @@ export default function Diagnosis() {
 
   useEffect(() => {
     if (!visible) return;
-    metrics.forEach((m, i) => {
+    auditTracks.forEach((track, i) => {
       setTimeout(() => {
-        let frame = 0;
-        const target = m.value;
-        const animate = () => {
-          frame += 2.5;
-          if (frame >= target) frame = target;
-          setBars((prev) => { const next = [...prev]; next[i] = frame; return next; });
-          if (frame < target) requestAnimationFrame(animate);
-        };
-        animate();
-      }, 200 + i * 150);
+        setAnimatedScores((prev) => {
+          const next = [...prev];
+          next[i] = track.score;
+          return next;
+        });
+      }, 100 + i * 80);
     });
   }, [visible]);
+
+  const current = auditTracks[selectedTrack];
 
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
       id="diagnostico"
       style={{
-        background: "linear-gradient(160deg, var(--ivory-mid) 0%, var(--white-warm) 100%)",
-        padding: "clamp(3rem, 5vw, 4.5rem) 0",
         position: "relative",
         overflow: "hidden",
+        padding: "clamp(2.75rem, 4.5vw, 3.75rem) 0",
+        color: "var(--ivory)",
       }}
     >
-      {/* Decorative circles */}
-      <div style={{ position: "absolute", top: "-100px", right: "-100px", width: "400px", height: "400px", borderRadius: "50%", border: "1px solid rgba(184,149,42,0.12)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", top: "-60px", right: "-60px", width: "280px", height: "280px", borderRadius: "50%", border: "1px solid rgba(184,149,42,0.08)", pointerEvents: "none" }} />
+      {/* Background Image Texture (panel.png) with Sleek Luxury Overlay */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <Image
+          src="/images/panel.png"
+          alt="Panel de análisis diagnóstico"
+          fill
+          style={{ objectFit: "cover", objectPosition: "center 30%" }}
+          sizes="100vw"
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(135deg, rgba(9,21,35,0.95) 0%, rgba(9,21,35,0.88) 50%, rgba(13,30,46,0.94) 100%)",
+          }}
+        />
+      </div>
 
-      <div className="container">
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <span className="text-label" style={{ color: "var(--gold-mid)", display: "block", marginBottom: "0.75rem" }}>
-            Nuestro primer paso
-          </span>
-          <h2
-            className="text-display-lg"
+      <div className="container" style={{ position: "relative", zIndex: 2 }}>
+        {/* Compact Header */}
+        <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 2rem" }}>
+          <div
             style={{
-              color: "var(--navy-deepest)",
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(24px)",
-              transition: "opacity 0.7s ease, transform 0.7s ease",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+              background: "rgba(184,149,42,0.15)",
+              border: "1px solid rgba(184,149,42,0.35)",
+              borderRadius: "9999px",
+              padding: "0.25rem 0.85rem",
+              marginBottom: "0.75rem",
             }}
           >
-            Antes de vender una solución,<br />
-            <span style={{ color: "var(--gold-mid)" }}>entendemos la empresa.</span>
-          </h2>
-        </div>
-
-        {/* Main grid */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "4rem",
-          alignItems: "start",
-        }}>
-          {/* Left: image + product name */}
-          <div style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateX(0)" : "translateX(-32px)",
-            transition: "opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s",
-          }}
-          className="hide-mobile">
-            <div style={{ position: "relative", borderRadius: "16px", overflow: "hidden", boxShadow: "0 20px 60px rgba(9,21,35,0.12)" }}>
-              <Image
-                src="/images/panel.png"
-                alt="Panel de análisis Diagnóstico 360°"
-                width={600}
-                height={450}
-                style={{ width: "100%", height: "auto", display: "block" }}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div style={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(to top, rgba(248,245,239,0.7) 0%, transparent 50%)",
-              }} />
-            </div>
+            <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--gold-mid)" }} />
+            <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold-mid)" }}>
+              AUDITORÍA INICIAL
+            </span>
           </div>
 
-          {/* Right: animated metrics */}
-          <div style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateX(0)" : "translateX(32px)",
-            transition: "opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s",
-          }}>
-            <div style={{
-              background: "#ffffff",
-              border: "1px solid rgba(184,149,42,0.15)",
-              boxShadow: "0 4px 24px rgba(13,30,46,0.07)",
-              borderRadius: "20px",
-              padding: "2rem",
-            }}>
-              <div style={{ marginBottom: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ color: "var(--navy-deepest)", fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 600 }}>Resultados del Diagnóstico</span>
-                <span style={{ fontSize: "0.65rem", color: "var(--text-muted-light)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Demo · Empresa tipo</span>
-              </div>
+          <h2
+            className="text-display-md"
+            style={{
+              color: "#FFFFFF",
+              marginBottom: "0.5rem",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(16px)",
+              transition: "opacity 0.5s ease, transform 0.5s ease",
+            }}
+          >
+            Diagnóstico 360°: <span style={{ color: "var(--gold-mid)" }}>la verdad de tu empresa</span>
+          </h2>
 
-              {metrics.map((m, i) => (
-                <div key={m.label} style={{ marginBottom: "1.5rem" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                    <span style={{ color: "var(--navy-deepest)", fontSize: "0.875rem", fontWeight: 500 }}>{m.label}</span>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.875rem", color: statusColors[m.status as keyof typeof statusColors], fontWeight: 600 }}>
-                        {Math.round(bars[i])}%
-                      </span>
+          <p
+            style={{
+              color: "rgba(240,237,232,0.8)",
+              fontSize: "0.92rem",
+              lineHeight: 1.5,
+              opacity: visible ? 1 : 0,
+              transition: "opacity 0.5s ease 0.1s",
+            }}
+          >
+            Haz clic en cada dimensión para ver el hallazgo habitual y la solución aplicada.
+          </p>
+        </div>
+
+        {/* Compact Diagnostic Cockpit: Left Interactive Track List + Right Quick Prescription */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.1fr 1fr",
+            gap: "1.5rem",
+            alignItems: "stretch",
+          }}
+          className="diagnosis-grid"
+        >
+          {/* Left Column: Compact Track Bars */}
+          <div
+            style={{
+              background: "rgba(13, 30, 46, 0.7)",
+              backdropFilter: "blur(14px)",
+              border: "1px solid rgba(184,149,42,0.22)",
+              borderRadius: "18px",
+              padding: "1.25rem 1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: "0.65rem",
+            }}
+          >
+            {auditTracks.map((track, idx) => {
+              const isSelected = selectedTrack === idx;
+              const score = animatedScores[idx];
+              const isCrit = track.status === "crit";
+
+              return (
+                <button
+                  key={track.id}
+                  onClick={() => setSelectedTrack(idx)}
+                  type="button"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    padding: "0.75rem 1rem",
+                    borderRadius: "12px",
+                    background: isSelected ? "rgba(184,149,42,0.18)" : "rgba(255,255,255,0.04)",
+                    border: isSelected ? "1.5px solid var(--gold-mid)" : "1px solid rgba(255,255,255,0.06)",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition: "all 0.2s ease",
+                    transform: isSelected ? "translateX(4px)" : "translateX(0)",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.35rem" }}>
+                    <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#FFFFFF" }}>
+                      {track.name}
+                    </span>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
                       <span
-                        className={`badge badge-${m.status}`}
-                        style={{ fontSize: "0.6rem", padding: "0.2rem 0.5rem" }}
+                        style={{
+                          fontSize: "0.64rem",
+                          fontWeight: 700,
+                          padding: "0.15rem 0.5rem",
+                          borderRadius: "9999px",
+                          background: isCrit ? "rgba(239,68,68,0.2)" : "rgba(234,179,8,0.2)",
+                          color: isCrit ? "#fca5a5" : "#fde047",
+                        }}
                       >
-                        <span style={{ color: statusColors[m.status as keyof typeof statusColors] }}>{statusDot[m.status as keyof typeof statusDot]}</span>
-                        {m.statusLabel}
+                        {track.statusLabel}
+                      </span>
+                      <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--gold-mid)", minWidth: "32px", textAlign: "right" }}>
+                        {score}%
                       </span>
                     </div>
                   </div>
-                  {/* Bar */}
-                  <div style={{
-                    height: "6px",
-                    background: "rgba(13,30,46,0.08)",
-                    borderRadius: "3px",
-                    overflow: "hidden",
-                  }}>
-                    <div style={{
-                      height: "100%",
-                      width: `${bars[i]}%`,
-                      background: `linear-gradient(90deg, ${statusColors[m.status as keyof typeof statusColors]}, ${statusColors[m.status as keyof typeof statusColors]}aa)`,
-                      borderRadius: "3px",
-                      transition: "width 0.05s linear",
-                      boxShadow: `0 0 8px ${statusColors[m.status as keyof typeof statusColors]}66`,
-                    }} />
-                  </div>
-                </div>
-              ))}
 
-              {/* Legend */}
-              <div style={{ borderTop: "1px solid rgba(13,30,46,0.1)", paddingTop: "1rem", marginTop: "0.5rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                {[
-                  { s: "ok", l: "Adecuado" },
-                  { s: "warn", l: "Requiere atención" },
-                  { s: "crit", l: "Prioritario" },
-                ].map(({ s, l }) => (
-                  <div key={s} style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: statusColors[s as keyof typeof statusColors] }} />
-                    <span style={{ fontSize: "0.7rem", color: "var(--text-muted-light)" }}>{l}</span>
+                  {/* Progress bar */}
+                  <div style={{ height: "4px", background: "rgba(255,255,255,0.1)", borderRadius: "2px", overflow: "hidden" }}>
+                    <div
+                      style={{
+                        height: "100%",
+                        width: `${score}%`,
+                        background: isCrit
+                          ? "linear-gradient(90deg, #ef4444, #f97316)"
+                          : "linear-gradient(90deg, #eab308, #C9A84C)",
+                        borderRadius: "2px",
+                        transition: "width 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+                      }}
+                    />
                   </div>
-                ))}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right Column: Compact Prescription Box */}
+          <div
+            style={{
+              background: "rgba(9, 21, 35, 0.85)",
+              backdropFilter: "blur(14px)",
+              border: "1px solid rgba(184,149,42,0.3)",
+              borderRadius: "18px",
+              padding: "1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                <span style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--gold-mid)" }}>
+                  HALLAZGO & SOLUCIÓN DIRECTA
+                </span>
+                <span style={{ fontSize: "0.72rem", color: "rgba(240,237,232,0.6)" }}>
+                  Dimensión {selectedTrack + 1} de 5
+                </span>
+              </div>
+
+              <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "1rem" }}>
+                {current.name}
+              </h3>
+
+              {/* Finding */}
+              <div style={{ marginBottom: "1rem" }}>
+                <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#f87171", marginBottom: "0.25rem" }}>
+                  ⚠ Lo que encontramos en la auditoría:
+                </div>
+                <p style={{ color: "rgba(240,237,232,0.85)", fontSize: "0.88rem", lineHeight: 1.5, margin: 0 }}>
+                  {current.finding}
+                </p>
+              </div>
+
+              {/* Solution */}
+              <div
+                style={{
+                  background: "rgba(184,149,42,0.12)",
+                  border: "1px solid rgba(184,149,42,0.25)",
+                  borderRadius: "12px",
+                  padding: "0.9rem 1rem",
+                }}
+              >
+                <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--gold-mid)", marginBottom: "0.25rem" }}>
+                  ✦ La Solución ESTRUCTA:
+                </div>
+                <p style={{ color: "var(--ivory)", fontSize: "0.88rem", fontWeight: 500, lineHeight: 1.5, margin: 0 }}>
+                  {current.solution}
+                </p>
               </div>
             </div>
 
-            {/* Bottom statement */}
-            <div style={{ marginTop: "2rem", padding: "1.5rem", background: "rgba(184,149,42,0.07)", border: "1px solid rgba(184,149,42,0.15)", borderRadius: "12px" }}>
-              <p style={{ color: "var(--navy-deepest)", fontFamily: "var(--font-display)", fontSize: "1rem", fontStyle: "italic", lineHeight: 1.6 }}>
-                "No se trata solamente de decir qué le duele a la empresa. Se trata de <span style={{ color: "var(--gold-mid)", fontStyle: "normal", fontWeight: 600 }}>comenzar a resolverlo.</span>"
-              </p>
-            </div>
+            <div style={{ marginTop: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+              <span style={{ fontSize: "0.76rem", color: "rgba(240,237,232,0.6)" }}>
+                Auditoría preliminar confidencial
+              </span>
 
-            <div style={{ marginTop: "1.5rem" }}>
               <a
                 href="#contacto"
                 className="btn btn-primary"
-                onClick={(e) => { e.preventDefault(); document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" }); }}
-                style={{ width: "100%", justifyContent: "center" }}
+                style={{
+                  padding: "0.65rem 1.4rem",
+                  fontSize: "0.82rem",
+                  borderRadius: "9999px",
+                }}
               >
-                Solicitar mi diagnóstico
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                Agendar Diagnóstico
               </a>
             </div>
           </div>
@@ -204,8 +336,10 @@ export default function Diagnosis() {
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          #diagnostico .container > div:nth-child(2) { grid-template-columns: 1fr !important; }
+        @media (max-width: 820px) {
+          .diagnosis-grid {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
     </section>
