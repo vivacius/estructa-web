@@ -156,7 +156,7 @@ export default function Hero() {
               pointerEvents: "none",
             }} />
 
-            <div ref={imgRef} style={{ height: "100%", borderRadius: "16px", overflow: "hidden", transform: "scale(1.04)", transition: "transform 0.1s linear" }}>
+            <div ref={imgRef} style={{ position: "relative", height: "100%", borderRadius: "16px", overflow: "hidden", transform: "scale(1.04)", transition: "transform 0.1s linear" }}>
               <Image
                 src="/images/horizonte.png"
                 alt="Arquitectura empresarial y tecnología"
