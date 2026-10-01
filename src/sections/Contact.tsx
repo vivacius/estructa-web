@@ -98,7 +98,7 @@ export default function Contact() {
             {/* WhatsApp CTA */}
             <div style={{ marginTop: "3rem" }}>
               <a
-                href="https://wa.me/1234567890"
+                href="https://wa.me/573013555173"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-wa"

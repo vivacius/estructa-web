@@ -95,32 +95,7 @@ export default function Diagnosis() {
             transition: "opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s",
           }}
           className="hide-mobile">
-            <div style={{
-              background: "rgba(184,149,42,0.08)",
-              border: "1px solid rgba(184,149,42,0.2)",
-              borderRadius: "20px",
-              padding: "2rem",
-              marginBottom: "2rem",
-              textAlign: "center",
-            }}>
-              <div className="badge badge-gold" style={{ marginBottom: "1rem" }}>Producto Principal</div>
-              <h3
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.8rem",
-                  color: "var(--gold-mid)",
-                  fontWeight: 700,
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Diagnóstico Empresarial 360°
-              </h3>
-              <p style={{ color: "var(--text-muted-light)", fontSize: "0.9rem" }}>
-                Una evaluación integral de tu empresa en cinco dimensiones críticas.
-              </p>
-            </div>
-
-            <div style={{ position: "relative", borderRadius: "16px", overflow: "hidden", boxShadow: "0 20px 60px rgba(9,21,35,0.6)" }}>
+            <div style={{ position: "relative", borderRadius: "16px", overflow: "hidden", boxShadow: "0 20px 60px rgba(9,21,35,0.12)" }}>
               <Image
                 src="/images/panel.png"
                 alt="Panel de análisis Diagnóstico 360°"

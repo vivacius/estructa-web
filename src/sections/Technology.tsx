@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useRef, useState } from "react";
 
 const questions = [
@@ -71,21 +71,6 @@ export default function Technology() {
               </p>
             </div>
 
-            <p className="text-body-lg" style={{ color: "var(--text-muted-light)", marginBottom: "2.5rem", lineHeight: 1.75 }}>
-              La tecnología es una herramienta poderosa. Pero aplicada sin diagnóstico, sin proceso claro y sin datos de calidad, se convierte en otro problema.
-            </p>
-
-            <div style={{
-              padding: "1.5rem 2rem",
-              borderLeft: "3px solid var(--gold-mid)",
-              background: "var(--ivory-mid)",
-              borderRadius: "0 12px 12px 0",
-            }}>
-              <p className="text-display-sm text-navy">
-                La tecnología es una herramienta.<br />
-                <span style={{ color: "var(--gold-primary)" }}>No el punto de partida.</span>
-              </p>
-            </div>
           </div>
 
           {/* Right: Questions sequence */}

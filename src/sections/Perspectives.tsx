@@ -200,24 +200,6 @@ export default function Perspectives() {
           </div>
         </div>
 
-        {/* Bottom statement */}
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: "5rem",
-            padding: "2.5rem",
-            background: "rgba(184,149,42,0.06)",
-            border: "1px solid rgba(184,149,42,0.15)",
-            borderRadius: "16px",
-            opacity: visible ? 1 : 0,
-            transition: "opacity 0.7s ease 0.8s",
-          }}
-        >
-          <p className="text-display-sm" style={{ color: "var(--navy-deepest)", fontStyle: "italic" }}>
-            "La soledad del empresario no debería ser enfrentar estos desafíos sin un equipo que entienda el negocio completo."
-          </p>
-          <span className="gold-line" style={{ margin: "1.5rem auto 0" }} />
-        </div>
       </div>
 
       <style>{`

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
@@ -115,28 +115,6 @@ export default function Hero() {
               >
                 Conoce nuestro enfoque
               </a>
-            </div>
-
-            {/* Trust indicators */}
-            <div style={{
-              marginTop: "3rem",
-              paddingTop: "2rem",
-              borderTop: "1px solid rgba(13,30,46,0.1)",
-              display: "flex",
-              gap: "2rem",
-              flexWrap: "wrap",
-            }}>
-              {[
-                { n: "4", label: "Áreas integradas" },
-                { n: "360°", label: "Diagnóstico empresarial" },
-                { n: "Pyme", label: "Enfoque especializado" },
-              ].map(({ n, label }) => (
-                <div key={label}>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "var(--navy-deepest)", lineHeight: 1 }}>{n}</div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted-light)", marginTop: "0.25rem" }}>{label}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* RIGHT: Image */}

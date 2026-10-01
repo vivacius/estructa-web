@@ -48,7 +48,7 @@ export default function Home() {
 
       {/* WhatsApp float */}
       <a
-        href="https://wa.me/1234567890"
+        href="https://wa.me/573013555173"
         target="_blank"
         rel="noopener noreferrer"
         className="wa-float"
