@@ -81,7 +81,7 @@ export default function Methodology() {
             top: 0,
             bottom: 0,
             width: "2px",
-            background: "rgba(184,149,42,0.15)",
+            background: "rgba(13,30,46,0.1)",
           }}>
             <div style={{
               position: "absolute",
@@ -167,7 +167,7 @@ export default function Methodology() {
               { label: "Solución ESTRUCTA", text: example.solution, color: "#C9A84C" },
               { label: "Resultado esperado", text: example.result, color: "#4ade80" },
             ].map(({ label, text, color }) => (
-              <div key={label} style={{ padding: "1.25rem", background: "rgba(255,255,255,0.03)", borderRadius: "12px", borderLeft: `3px solid ${color}` }}>
+              <div key={label} style={{ padding: "1.25rem", background: "var(--ivory-mid)", borderRadius: "12px", borderLeft: `3px solid ${color}` }}>
                 <div style={{ fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: color, fontWeight: 600, marginBottom: "0.5rem" }}>{label}</div>
                 <p style={{ color: "var(--navy-mid)", fontSize: "0.875rem", lineHeight: 1.6 }}>{text}</p>
               </div>

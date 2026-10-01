@@ -90,7 +90,7 @@ export default function Contact() {
                     flexShrink: 0,
                     borderRadius: "1px",
                   }} />
-                  <span style={{ color: "var(--text-muted-dark)", fontSize: "0.9rem", lineHeight: 1.6 }}>{text}</span>
+                  <span style={{ color: "var(--text-muted-light)", fontSize: "0.9rem", lineHeight: 1.6 }}>{text}</span>
                 </div>
               ))}
             </div>
@@ -216,7 +216,7 @@ export default function Contact() {
                   </svg>
                 </div>
                 <h3 style={{ fontFamily: "var(--font-display)", color: "var(--gold-mid)", fontSize: "1.5rem", marginBottom: "1rem" }}>¡Mensaje recibido!</h3>
-                <p style={{ color: "var(--text-muted-dark)", lineHeight: 1.7 }}>
+                <p style={{ color: "var(--text-muted-light)", lineHeight: 1.7 }}>
                   Nos pondremos en contacto contigo muy pronto para agendar una conversación inicial.
                 </p>
               </div>

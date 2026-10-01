@@ -175,7 +175,7 @@ export default function Diagnosis() {
                   {/* Bar */}
                   <div style={{
                     height: "6px",
-                    background: "rgba(255,255,255,0.06)",
+                    background: "rgba(13,30,46,0.08)",
                     borderRadius: "3px",
                     overflow: "hidden",
                   }}>
