@@ -1,26 +1,44 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 
-interface Node {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  baseRadius: number;
-  label?: string;
-  isPillar?: boolean;
+interface Wave {
+  amplitude: number;
+  frequency: number;
+  speed: number;
   color: string;
-  pulsePhase: number;
+  lineWidth: number;
+  offsetYRatio: number;
+  glowColor?: string;
+  glowBlur?: number;
 }
 
 interface Particle {
   x: number;
   y: number;
-  speed: number;
+  vx: number;
   size: number;
   alpha: number;
   waveIndex: number;
+  hue: string;
+}
+
+interface NodePoint {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  label?: string;
+  color: string;
+  pulse: number;
+}
+
+interface Ripple {
+  x: number;
+  y: number;
+  radius: number;
+  maxRadius: number;
+  alpha: number;
 }
 
 export default function HeroCanvas() {
@@ -32,12 +50,36 @@ export default function HeroCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
+    let animId: number;
+    let width = 0;
+    let height = 0;
 
-    // Mouse coordinates
-    let mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000, active: false };
+    // Mouse state
+    const mouse = {
+      x: -1000,
+      y: -1000,
+      targetX: -1000,
+      targetY: -1000,
+      active: false,
+      down: false,
+    };
+
+    const ripples: Ripple[] = [];
+
+    const handleResize = () => {
+      if (!canvas || !canvas.parentElement) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.scale(dpr, dpr);
+      initScene();
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -52,55 +94,107 @@ export default function HeroCanvas() {
       mouse.targetY = -1000;
     };
 
-    const handleResize = () => {
-      if (!canvas || !canvas.parentElement) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = canvas.parentElement.clientWidth;
-      height = canvas.parentElement.clientHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.scale(dpr, dpr);
-      initNodes();
+    const handleClick = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ripples.push({
+        x,
+        y,
+        radius: 0,
+        maxRadius: Math.min(width, height) * 0.45,
+        alpha: 0.65,
+      });
     };
 
-    // Strategic pillars shown on key nodes
-    const pillarLabels = ["LEGAL", "FINANZAS", "ESTRATEGIA", "TECNOLOGÍA", "DATOS 360°"];
-    let nodes: Node[] = [];
+    // Strategic pillars anchored along the horizontal canvas
+    const labels = ["LEGAL", "FINANZAS", "ESTRATEGIA", "TECNOLOGÍA", "INTELIGENCIA 360°"];
+    let nodes: NodePoint[] = [];
     let particles: Particle[] = [];
 
-    const initNodes = () => {
+    // Waves definition
+    const waves: Wave[] = [
+      {
+        amplitude: 35,
+        frequency: 0.0028,
+        speed: 0.8,
+        color: "rgba(184, 149, 42, 0.28)", // Primary Gold
+        lineWidth: 2.2,
+        offsetYRatio: 0.52,
+        glowColor: "rgba(184, 149, 42, 0.45)",
+        glowBlur: 10,
+      },
+      {
+        amplitude: 48,
+        frequency: 0.0022,
+        speed: -0.6,
+        color: "rgba(201, 168, 76, 0.2)", // Pale Gold
+        lineWidth: 1.6,
+        offsetYRatio: 0.48,
+      },
+      {
+        amplitude: 28,
+        frequency: 0.0042,
+        speed: 1.1,
+        color: "rgba(9, 21, 35, 0.12)", // Deep Navy filament
+        lineWidth: 1.4,
+        offsetYRatio: 0.58,
+      },
+      {
+        amplitude: 60,
+        frequency: 0.0018,
+        speed: 0.4,
+        color: "rgba(184, 149, 42, 0.15)", // Broad golden sweep
+        lineWidth: 1.2,
+        offsetYRatio: 0.44,
+      },
+      {
+        amplitude: 20,
+        frequency: 0.0055,
+        speed: -0.9,
+        color: "rgba(212, 185, 106, 0.3)", // Vibrant gold accent
+        lineWidth: 1.8,
+        offsetYRatio: 0.55,
+        glowColor: "rgba(212, 185, 106, 0.5)",
+        glowBlur: 8,
+      },
+    ];
+
+    const initScene = () => {
+      // Create Nodes
       nodes = [];
-      const nodeCount = Math.floor(Math.max(12, Math.min(26, width / 45)));
+      const nodeCount = Math.max(8, Math.min(18, Math.floor(width / 75)));
 
       for (let i = 0; i < nodeCount; i++) {
-        const isPillar = i < pillarLabels.length;
+        const isLabeled = i < labels.length;
+        const segmentX = (width / (labels.length + 1)) * (i + 1);
+        const x = isLabeled ? segmentX + (Math.random() - 0.5) * 50 : Math.random() * width;
+        const y = height * 0.3 + Math.random() * (height * 0.45);
+
         nodes.push({
-          x: (width / (nodeCount + 1)) * (i + 1) + (Math.random() - 0.5) * 60,
-          y: height * 0.25 + Math.random() * (height * 0.55),
-          vx: (Math.random() * 0.35 + 0.15) * (Math.random() > 0.4 ? 1 : -0.7),
+          x,
+          y,
+          vx: (Math.random() * 0.3 + 0.1) * (Math.random() > 0.35 ? 1 : -0.8),
           vy: (Math.random() - 0.5) * 0.25,
-          radius: isPillar ? 4.5 : Math.random() * 2 + 1.5,
-          baseRadius: isPillar ? 4.5 : Math.random() * 2 + 1.5,
-          label: isPillar ? pillarLabels[i] : undefined,
-          isPillar,
-          color: isPillar ? "#B8952A" : "rgba(13,30,46,0.35)",
-          pulsePhase: Math.random() * Math.PI * 2,
+          radius: isLabeled ? 4.5 : Math.random() * 2 + 1.5,
+          label: isLabeled ? labels[i] : undefined,
+          color: isLabeled ? "#B8952A" : "rgba(13, 30, 46, 0.35)",
+          pulse: Math.random() * Math.PI * 2,
         });
       }
 
-      // Horizontal streaming particles along the wave lines
+      // Create Fast Horizontal Stream Particles
       particles = [];
-      const particleCount = Math.min(45, Math.floor(width / 25));
-      for (let i = 0; i < particleCount; i++) {
+      const count = Math.min(65, Math.floor(width / 20));
+      for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          speed: Math.random() * 1.2 + 0.6,
-          size: Math.random() * 2 + 1,
-          alpha: Math.random() * 0.7 + 0.2,
-          waveIndex: Math.floor(Math.random() * 3),
+          vx: Math.random() * 1.6 + 0.8,
+          size: Math.random() * 2.2 + 1,
+          alpha: Math.random() * 0.65 + 0.25,
+          waveIndex: Math.floor(Math.random() * waves.length),
+          hue: Math.random() > 0.2 ? "184, 149, 42" : "9, 21, 35",
         });
       }
     };
@@ -108,79 +202,91 @@ export default function HeroCanvas() {
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
+    canvas.addEventListener("click", handleClick);
 
     handleResize();
 
     let time = 0;
 
     const render = () => {
-      time += 0.012;
+      time += 0.015;
 
       // Smooth mouse follow
-      mouse.x += (mouse.targetX - mouse.x) * 0.08;
-      mouse.y += (mouse.targetY - mouse.y) * 0.08;
+      mouse.x += (mouse.targetX - mouse.x) * 0.06;
+      mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
       ctx.clearRect(0, 0, width, height);
 
-      // 1. HORIZONTAL FLOWING HARMONIC WAVES (Exotic Fluid Ribbons)
-      const waveConfigs = [
-        {
-          amplitude: 38,
-          frequency: 0.0035,
-          speed: 0.7,
-          color: "rgba(184, 149, 42, 0.18)", // Gold primary
-          lineWidth: 2,
-          offsetY: height * 0.48,
-          glow: true,
-        },
-        {
-          amplitude: 52,
-          frequency: 0.0028,
-          speed: -0.5,
-          color: "rgba(201, 168, 76, 0.14)", // Pale gold
-          lineWidth: 1.5,
-          offsetY: height * 0.54,
-          glow: false,
-        },
-        {
-          amplitude: 32,
-          frequency: 0.0045,
-          speed: 0.9,
-          color: "rgba(9, 21, 35, 0.07)", // Deep navy subtle
-          lineWidth: 1.2,
-          offsetY: height * 0.62,
-          glow: false,
-        },
-        {
-          amplitude: 24,
-          frequency: 0.005,
-          speed: 1.1,
-          color: "rgba(184, 149, 42, 0.24)", // Fine gold accent
-          lineWidth: 1.8,
-          offsetY: height * 0.42,
-          glow: true,
-        },
-      ];
-
-      waveConfigs.forEach((wave) => {
+      // --- 1. ARCHITECTURAL GRID ACCENTS & HORIZON CROSSHAIRS ---
+      ctx.save();
+      ctx.strokeStyle = "rgba(184, 149, 42, 0.06)";
+      ctx.lineWidth = 1;
+      const step = 80;
+      for (let x = 0; x < width; x += step) {
+        // Subtle vertical ticks
         ctx.beginPath();
-        for (let x = 0; x <= width; x += 6) {
-          // Interactive distortion from mouse
-          let mouseDist = 0;
-          let mouseEffect = 0;
+        ctx.moveTo(x, height * 0.46);
+        ctx.lineTo(x, height * 0.46 + 6);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // --- 2. RIPPLE PROPAGATION ON CLICK ---
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.radius += 4.5;
+        r.alpha *= 0.965;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(184, 149, 42, ${r.alpha})`;
+        ctx.lineWidth = 1.8;
+        ctx.shadowColor = "rgba(184, 149, 42, 0.5)";
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+        ctx.restore();
+
+        if (r.alpha < 0.01 || r.radius > r.maxRadius) {
+          ripples.splice(i, 1);
+        }
+      }
+
+      // --- 3. EXOTIC HORIZONTAL HARMONIC WAVES ---
+      waves.forEach((w) => {
+        ctx.save();
+        ctx.beginPath();
+
+        const baseOffsetY = height * w.offsetYRatio;
+
+        for (let x = 0; x <= width; x += 5) {
+          // Mouse deflection
+          let mouseDisplacement = 0;
           if (mouse.active) {
             const dx = x - mouse.x;
-            mouseDist = Math.abs(dx);
-            if (mouseDist < 200) {
-              mouseEffect = Math.cos((mouseDist / 200) * (Math.PI / 2)) * 30 * Math.sin(time * 3);
+            const dist = Math.abs(dx);
+            if (dist < 260) {
+              const factor = (1 - dist / 260);
+              mouseDisplacement = Math.sin(factor * Math.PI) * 36 * Math.sin(time * 3);
+            }
+          }
+
+          // Ripple effect
+          let rippleDisplacement = 0;
+          for (const rip of ripples) {
+            const dx = x - rip.x;
+            const dist = Math.abs(dx);
+            if (Math.abs(dist - rip.radius) < 40) {
+              rippleDisplacement += (1 - Math.abs(dist - rip.radius) / 40) * 16 * rip.alpha;
             }
           }
 
           const y =
-            wave.offsetY +
-            Math.sin(x * wave.frequency + time * wave.speed) * wave.amplitude +
-            Math.cos(x * 0.0018 + time * 0.4) * (wave.amplitude * 0.35) +
-            mouseEffect;
+            baseOffsetY +
+            Math.sin(x * w.frequency + time * w.speed) * w.amplitude +
+            Math.cos(x * (w.frequency * 0.6) + time * 0.3) * (w.amplitude * 0.4) +
+            mouseDisplacement +
+            rippleDisplacement;
 
           if (x === 0) {
             ctx.moveTo(x, y);
@@ -189,209 +295,221 @@ export default function HeroCanvas() {
           }
         }
 
-        ctx.strokeStyle = wave.color;
-        ctx.lineWidth = wave.lineWidth;
-        if (wave.glow) {
-          ctx.shadowColor = "rgba(184, 149, 42, 0.4)";
-          ctx.shadowBlur = 8;
-        } else {
-          ctx.shadowBlur = 0;
+        ctx.strokeStyle = w.color;
+        ctx.lineWidth = w.lineWidth;
+        if (w.glowColor) {
+          ctx.shadowColor = w.glowColor;
+          ctx.shadowBlur = w.glowBlur || 8;
         }
         ctx.stroke();
-        ctx.shadowBlur = 0;
+        ctx.restore();
       });
 
-      // 2. STREAMING HORIZONTAL PARTICLES (Data Stream)
+      // --- 4. STREAMING PARTICLES WITH HORIZONTAL LIGHT TRAILS ---
       particles.forEach((p) => {
-        p.x += p.speed;
-        if (p.x > width + 20) {
-          p.x = -20;
-          p.y = height * 0.2 + Math.random() * (height * 0.6);
+        p.x += p.vx;
+        if (p.x > width + 30) {
+          p.x = -30;
+          p.y = height * 0.25 + Math.random() * (height * 0.5);
         }
 
-        // Float particle on wave y
-        const wave = waveConfigs[p.waveIndex % waveConfigs.length];
+        const wave = waves[p.waveIndex % waves.length];
         const targetY =
-          wave.offsetY +
+          height * wave.offsetYRatio +
           Math.sin(p.x * wave.frequency + time * wave.speed) * wave.amplitude;
 
-        p.y += (targetY - p.y) * 0.05;
+        p.y += (targetY - p.y) * 0.08;
 
-        // Draw particle with trail
+        // Particle Core
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(184, 149, 42, ${p.alpha})`;
+        ctx.fillStyle = `rgba(${p.hue}, ${p.alpha})`;
         ctx.fill();
 
-        // Horizontal velocity trail
+        // Horizontal light speed trail
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p.x - p.speed * 8, p.y);
-        ctx.strokeStyle = `rgba(184, 149, 42, ${p.alpha * 0.35})`;
-        ctx.lineWidth = p.size * 0.7;
+        ctx.lineTo(p.x - p.vx * 12, p.y);
+        ctx.strokeStyle = `rgba(${p.hue}, ${p.alpha * 0.4})`;
+        ctx.lineWidth = p.size * 0.8;
         ctx.stroke();
       });
 
-      // 3. CONSTELLATION INTERCONNECTIONS (Architectural Filaments)
-      const maxConnectDistance = Math.min(180, width * 0.18);
+      // --- 5. INTERCONNECTED CONSTELLATION MESH ---
+      const maxDist = Math.min(220, width * 0.22);
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < maxConnectDistance) {
-            const alpha = (1 - dist / maxConnectDistance) * 0.35;
+          if (dist < maxDist) {
+            const alpha = (1 - dist / maxDist) * 0.35;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
 
-            // If either node is a strategic pillar, color the link with gold
-            if (nodes[i].isPillar || nodes[j].isPillar) {
-              ctx.strokeStyle = `rgba(184, 149, 42, ${alpha * 1.5})`;
-              ctx.lineWidth = 1.2;
-            } else {
-              ctx.strokeStyle = `rgba(13, 30, 46, ${alpha * 0.4})`;
-              ctx.lineWidth = 0.8;
-            }
+            const hasPillar = nodes[i].label || nodes[j].label;
+            ctx.strokeStyle = hasPillar
+              ? `rgba(184, 149, 42, ${alpha * 1.4})`
+              : `rgba(9, 21, 35, ${alpha * 0.35})`;
+            ctx.lineWidth = hasPillar ? 1.2 : 0.8;
             ctx.stroke();
 
-            // Occasional traveling data pulse along line
-            const pulse = (time * 1.5 + (i + j)) % 1;
-            const px = nodes[i].x + (nodes[j].x - nodes[i].x) * pulse;
-            const py = nodes[i].y + (nodes[j].y - nodes[i].y) * pulse;
+            // Energy spark traveling between nodes
+            const progress = (time * 1.2 + (i * 0.3 + j * 0.5)) % 1;
+            const sx = nodes[i].x + (nodes[j].x - nodes[i].x) * progress;
+            const sy = nodes[i].y + (nodes[j].y - nodes[i].y) * progress;
             ctx.beginPath();
-            ctx.arc(px, py, 1.4, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(184, 149, 42, 0.7)";
+            ctx.arc(sx, sy, 1.4, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(184, 149, 42, 0.75)";
             ctx.fill();
           }
         }
       }
 
-      // 4. DRAW NODES & LABELS
+      // --- 6. NODES, CROSSHAIRS & STRATEGIC PILLARS ---
       nodes.forEach((node) => {
-        // Physics & drifting
         node.x += node.vx;
         node.y += node.vy;
-        node.pulsePhase += 0.03;
+        node.pulse += 0.035;
 
-        // Bounce / wrap horizontal
-        if (node.x < -30) node.x = width + 30;
-        if (node.x > width + 30) node.x = -30;
-        if (node.y < height * 0.15 || node.y > height * 0.85) {
+        // Wrap around smoothly
+        if (node.x < -40) node.x = width + 40;
+        if (node.x > width + 40) node.x = -40;
+        if (node.y < height * 0.2 || node.y > height * 0.8) {
           node.vy *= -1;
         }
 
-        // Mouse attraction
+        // Magnetic attraction to cursor
         if (mouse.active) {
           const mdx = mouse.x - node.x;
           const mdy = mouse.y - node.y;
           const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mdist < 160 && mdist > 5) {
-            const force = (1 - mdist / 160) * 0.8;
+          if (mdist < 200 && mdist > 8) {
+            const force = (1 - mdist / 200) * 1.2;
             node.x += (mdx / mdist) * force;
             node.y += (mdy / mdist) * force;
           }
         }
 
-        // Pulse size
-        const pulse = Math.sin(node.pulsePhase) * 1.5;
-        const currentRadius = Math.max(1, node.baseRadius + (node.isPillar ? pulse : 0));
+        const isPillar = !!node.label;
+        const pulseVal = Math.sin(node.pulse);
+        const radius = isPillar ? node.radius + pulseVal * 1.2 : node.radius;
 
-        // Draw halo for pillar nodes
-        if (node.isPillar) {
-          const haloGrad = ctx.createRadialGradient(
-            node.x,
-            node.y,
-            2,
-            node.x,
-            node.y,
-            currentRadius * 5
-          );
-          haloGrad.addColorStop(0, "rgba(184, 149, 42, 0.35)");
-          haloGrad.addColorStop(0.6, "rgba(201, 168, 76, 0.12)");
-          haloGrad.addColorStop(1, "rgba(184, 149, 42, 0)");
-
+        // Pillar Halo Ring
+        if (isPillar) {
+          ctx.save();
+          // Outer halo
+          const halo = ctx.createRadialGradient(node.x, node.y, 2, node.x, node.y, 26);
+          halo.addColorStop(0, "rgba(184, 149, 42, 0.4)");
+          halo.addColorStop(0.6, "rgba(201, 168, 76, 0.1)");
+          halo.addColorStop(1, "rgba(255, 255, 255, 0)");
           ctx.beginPath();
-          ctx.arc(node.x, node.y, currentRadius * 5, 0, Math.PI * 2);
-          ctx.fillStyle = haloGrad;
+          ctx.arc(node.x, node.y, 26, 0, Math.PI * 2);
+          ctx.fillStyle = halo;
           ctx.fill();
 
-          // Outer glowing ring
+          // Delicate dashed orbital ring
           ctx.beginPath();
-          ctx.arc(node.x, node.y, currentRadius * 2.8, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(184, 149, 42, 0.4)";
+          ctx.arc(node.x, node.y, 14, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(184, 149, 42, 0.45)";
           ctx.lineWidth = 1;
-          ctx.setLineDash([3, 3]);
+          ctx.setLineDash([2, 3]);
           ctx.stroke();
           ctx.setLineDash([]);
+          ctx.restore();
         }
 
-        // Core dot
+        // Node Core
         ctx.beginPath();
-        ctx.arc(node.x, node.y, currentRadius, 0, Math.PI * 2);
-        ctx.fillStyle = node.color;
-        ctx.shadowColor = node.isPillar ? "rgba(184, 149, 42, 0.6)" : "transparent";
-        ctx.shadowBlur = node.isPillar ? 10 : 0;
+        ctx.arc(node.x, node.y, Math.max(1.5, radius), 0, Math.PI * 2);
+        ctx.fillStyle = isPillar ? "#B8952A" : node.color;
+        if (isPillar) {
+          ctx.shadowColor = "rgba(184, 149, 42, 0.7)";
+          ctx.shadowBlur = 10;
+        }
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Pillar Labels (Crisp, High-end Architectural typography)
-        if (node.label && width > 768) {
-          ctx.font = "600 9px 'Inter', sans-serif";
-          ctx.fillStyle = "#091523";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "bottom";
-
-          // Micro badge pill behind text
-          const textMetrics = ctx.measureText(node.label);
-          const badgeWidth = textMetrics.width + 14;
-          const badgeHeight = 16;
-          const badgeX = node.x - badgeWidth / 2;
-          const badgeY = node.y - currentRadius - badgeHeight - 4;
-
-          ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
-          ctx.strokeStyle = "rgba(184, 149, 42, 0.3)";
+        // Architectural crosshair on pillar nodes
+        if (isPillar) {
+          ctx.save();
+          ctx.strokeStyle = "rgba(184, 149, 42, 0.6)";
           ctx.lineWidth = 1;
+          const arm = 6;
           ctx.beginPath();
-          ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 4);
+          ctx.moveTo(node.x - arm, node.y);
+          ctx.lineTo(node.x + arm, node.y);
+          ctx.moveTo(node.x, node.y - arm);
+          ctx.lineTo(node.x, node.y + arm);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Refined Label Badge
+        if (node.label && width > 768) {
+          ctx.save();
+          ctx.font = "600 10px 'Inter', sans-serif";
+          const metrics = ctx.measureText(node.label);
+          const bw = metrics.width + 16;
+          const bh = 18;
+          const bx = node.x - bw / 2;
+          const by = node.y - radius - bh - 6;
+
+          // Frosted badge backing
+          ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
+          ctx.strokeStyle = "rgba(184, 149, 42, 0.35)";
+          ctx.lineWidth = 1;
+          ctx.shadowColor = "rgba(9, 21, 35, 0.08)";
+          ctx.shadowBlur = 8;
+          ctx.beginPath();
+          ctx.roundRect(bx, by, bw, bh, 5);
           ctx.fill();
           ctx.stroke();
 
+          // Text
+          ctx.shadowBlur = 0;
           ctx.fillStyle = "#091523";
-          ctx.fillText(node.label, node.x, badgeY + 12);
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(node.label, node.x, by + bh / 2);
+          ctx.restore();
         }
       });
 
-      // 5. AMBIENT MOUSE LIGHTING SPOTLIGHT
+      // --- 7. AMBIENT MOUSE SPOTLIGHT GLOW ---
       if (mouse.active) {
-        const mouseGrad = ctx.createRadialGradient(
+        ctx.save();
+        const mouseGlow = ctx.createRadialGradient(
           mouse.x,
           mouse.y,
           0,
           mouse.x,
           mouse.y,
-          180
+          240
         );
-        mouseGrad.addColorStop(0, "rgba(184, 149, 42, 0.12)");
-        mouseGrad.addColorStop(0.5, "rgba(201, 168, 76, 0.04)");
-        mouseGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
+        mouseGlow.addColorStop(0, "rgba(184, 149, 42, 0.12)");
+        mouseGlow.addColorStop(0.5, "rgba(201, 168, 76, 0.04)");
+        mouseGlow.addColorStop(1, "rgba(255, 255, 255, 0)");
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 180, 0, Math.PI * 2);
-        ctx.fillStyle = mouseGrad;
+        ctx.arc(mouse.x, mouse.y, 240, 0, Math.PI * 2);
+        ctx.fillStyle = mouseGlow;
         ctx.fill();
+        ctx.restore();
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      animId = requestAnimationFrame(render);
     };
 
     render();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
+      canvas.removeEventListener("click", handleClick);
     };
   }, []);
 
@@ -405,7 +523,7 @@ export default function HeroCanvas() {
         height: "100%",
         pointerEvents: "auto",
         zIndex: 1,
-        opacity: 0.95,
+        cursor: "crosshair",
       }}
     />
   );
