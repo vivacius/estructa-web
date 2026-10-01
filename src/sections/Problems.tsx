@@ -44,7 +44,7 @@ export default function Problems() {
       ref={ref as React.RefObject<HTMLElement>}
       style={{
         background: "var(--ivory-mid)",
-        padding: "clamp(5rem, 10vw, 9rem) 0",
+        padding: "clamp(3.5rem, 5vw, 4.5rem) 0",
         overflow: "hidden",
         position: "relative",
       }}
@@ -59,10 +59,10 @@ export default function Problems() {
 
       <div className="container">
         {/* Section label */}
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}
+        <div style={{ textAlign: "center", marginBottom: "1.75rem" }}
           className={`reveal ${visible ? "visible" : ""}`}>
-          <span className="text-label text-muted-l">El problema que resolvemos</span>
-          <span className="gold-line" style={{ margin: "0.75rem auto 0" }} />
+          <span className="text-label text-muted-l">El dilema empresarial</span>
+          <span className="gold-line" style={{ margin: "0.5rem auto 0" }} />
         </div>
 
         {/* Rotating phrase */}
@@ -131,17 +131,17 @@ export default function Problems() {
         {/* Resolution line */}
         <div
           className={`reveal ${visible ? "visible" : ""}`}
-          style={{ textAlign: "center", marginTop: "4rem" }}
+          style={{ textAlign: "center", marginTop: "2rem" }}
         >
           <div style={{
             display: "inline-block",
             width: "1px",
-            height: "60px",
+            height: "36px",
             background: "linear-gradient(to bottom, transparent, var(--gold-mid))",
-            marginBottom: "1.5rem",
+            marginBottom: "1rem",
           }} />
           <h3
-            className="text-display-lg"
+            className="text-display-md"
             style={{ color: "var(--navy-deepest)" }}
           >
             Ahí empieza <span style={{ color: "var(--gold-mid)" }}>ESTRUCTA.</span>

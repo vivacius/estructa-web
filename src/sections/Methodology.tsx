@@ -45,7 +45,7 @@ export default function Methodology() {
       ref={ref as React.RefObject<HTMLElement>}
       style={{
         background: "var(--ivory)",
-        padding: "clamp(5rem, 10vw, 9rem) 0",
+        padding: "clamp(3rem, 5vw, 4.5rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -58,8 +58,8 @@ export default function Methodology() {
 
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "4.5rem" }}>
-          <span className="text-label" style={{ color: "var(--gold-mid)", display: "block", marginBottom: "1rem" }}>Metodología</span>
+        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+          <span className="text-label" style={{ color: "var(--gold-mid)", display: "block", marginBottom: "0.75rem" }}>Metodología</span>
           <h2
             className="text-display-lg"
             style={{

@@ -30,7 +30,7 @@ export default function ExternalTeam() {
       style={{
         position: "relative",
         overflow: "hidden",
-        minHeight: "700px",
+        minHeight: "520px",
         display: "flex",
         alignItems: "center",
       }}
@@ -51,7 +51,7 @@ export default function ExternalTeam() {
         }} />
       </div>
 
-      <div className="container" style={{ position: "relative", zIndex: 2, padding: "clamp(5rem, 10vw, 9rem) clamp(1.25rem, 4vw, 3rem)" }}>
+      <div className="container" style={{ position: "relative", zIndex: 2, padding: "clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3rem)" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
           {/* Left */}
           <div

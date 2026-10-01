@@ -38,7 +38,7 @@ export default function Contact() {
       id="contacto"
       style={{
         background: "linear-gradient(160deg, var(--ivory) 0%, var(--white-warm) 100%)",
-        padding: "clamp(5rem, 10vw, 9rem) 0",
+        padding: "clamp(3.5rem, 5vw, 5rem) 0",
         position: "relative",
         overflow: "hidden",
       }}

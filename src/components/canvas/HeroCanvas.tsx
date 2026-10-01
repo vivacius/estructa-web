@@ -202,6 +202,16 @@ export default function HeroCanvas() {
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
+    // Load Logo for diffused watermark in canvas
+    const logoImg = typeof window !== "undefined" ? new window.Image() : null;
+    let logoLoaded = false;
+    if (logoImg) {
+      logoImg.src = "/images/logo.png";
+      logoImg.onload = () => {
+        logoLoaded = true;
+      };
+    }
+
     canvas.addEventListener("click", handleClick);
 
     handleResize();
@@ -216,6 +226,49 @@ export default function HeroCanvas() {
       mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
       ctx.clearRect(0, 0, width, height);
+
+      // --- DIFFUSED LOGO WATERMARK ---
+      if (logoLoaded && logoImg && logoImg.width > 0) {
+        ctx.save();
+        const logoTargetWidth = Math.min(width * 0.52, 540);
+        const logoAspectRatio = logoImg.height / logoImg.width;
+        const logoTargetHeight = logoTargetWidth * logoAspectRatio;
+        const centerX = width / 2;
+        const centerY = height * 0.42;
+
+        // Subtle breathing scale
+        const breathe = 1 + Math.sin(time * 0.6) * 0.012;
+
+        // Radial gold ambient aura behind watermark
+        const aura = ctx.createRadialGradient(
+          centerX,
+          centerY,
+          10,
+          centerX,
+          centerY,
+          logoTargetWidth * 0.6
+        );
+        aura.addColorStop(0, "rgba(184, 149, 42, 0.09)");
+        aura.addColorStop(0.5, "rgba(201, 168, 76, 0.03)");
+        aura.addColorStop(1, "rgba(255, 255, 255, 0)");
+        ctx.fillStyle = aura;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, logoTargetWidth * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw diffused logo watermark
+        ctx.globalAlpha = 0.07;
+        ctx.translate(centerX, centerY);
+        ctx.scale(breathe, breathe);
+        ctx.drawImage(
+          logoImg,
+          -logoTargetWidth / 2,
+          -logoTargetHeight / 2,
+          logoTargetWidth,
+          logoTargetHeight
+        );
+        ctx.restore();
+      }
 
       // --- 1. ARCHITECTURAL GRID ACCENTS & HORIZON CROSSHAIRS ---
       ctx.save();

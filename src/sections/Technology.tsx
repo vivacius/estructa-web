@@ -35,7 +35,7 @@ export default function Technology() {
       ref={ref as React.RefObject<HTMLElement>}
       style={{
         background: "var(--ivory)",
-        padding: "clamp(5rem, 10vw, 9rem) 0",
+        padding: "clamp(3rem, 5vw, 4.5rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
