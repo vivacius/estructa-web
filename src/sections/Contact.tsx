@@ -103,15 +103,17 @@ export default function Contact() {
           {/* Left Column: Direct Executive Contact Card */}
           <div
             style={{
-              background: "#FFFFFF",
-              border: "1.5px solid rgba(184,149,42,0.25)",
+              background: "rgba(255, 255, 255, 0.48)",
+              backdropFilter: "blur(22px)",
+              WebkitBackdropFilter: "blur(22px)",
+              border: "1.5px solid rgba(184, 149, 42, 0.25)",
               borderLeft: "4px solid var(--gold-mid)",
               borderRadius: "20px",
               padding: "2.5rem 2.25rem",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              boxShadow: "0 14px 40px rgba(9, 21, 35, 0.06)",
+              boxShadow: "0 18px 48px rgba(9, 21, 35, 0.06)",
             }}
           >
             <div>
@@ -178,11 +180,13 @@ export default function Contact() {
           {/* Right Column: Symmetrical Form Card */}
           <div
             style={{
-              background: "#FFFFFF",
-              border: "1.5px solid rgba(184,149,42,0.25)",
+              background: "rgba(255, 255, 255, 0.48)",
+              backdropFilter: "blur(22px)",
+              WebkitBackdropFilter: "blur(22px)",
+              border: "1.5px solid rgba(184, 149, 42, 0.25)",
               borderRadius: "20px",
               padding: "2.5rem 2.25rem",
-              boxShadow: "0 14px 40px rgba(9, 21, 35, 0.06)",
+              boxShadow: "0 18px 48px rgba(9, 21, 35, 0.06)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -215,10 +219,11 @@ export default function Contact() {
                         width: "100%",
                         padding: "0.75rem 0.95rem",
                         borderRadius: "10px",
-                        border: "1px solid rgba(9, 21, 35, 0.15)",
+                        border: "1px solid rgba(184, 149, 42, 0.22)",
                         fontSize: "0.88rem",
                         outline: "none",
-                        background: "#FAF7F2",
+                        background: "rgba(255, 255, 255, 0.72)",
+                        backdropFilter: "blur(10px)",
                         color: "var(--navy-deepest)",
                       }}
                     />
@@ -236,10 +241,11 @@ export default function Contact() {
                         width: "100%",
                         padding: "0.75rem 0.95rem",
                         borderRadius: "10px",
-                        border: "1px solid rgba(9, 21, 35, 0.15)",
+                        border: "1px solid rgba(184, 149, 42, 0.22)",
                         fontSize: "0.88rem",
                         outline: "none",
-                        background: "#FAF7F2",
+                        background: "rgba(255, 255, 255, 0.72)",
+                        backdropFilter: "blur(10px)",
                         color: "var(--navy-deepest)",
                       }}
                     />
@@ -258,10 +264,11 @@ export default function Contact() {
                       width: "100%",
                       padding: "0.75rem 0.95rem",
                       borderRadius: "10px",
-                      border: "1px solid rgba(9, 21, 35, 0.15)",
+                      border: "1px solid rgba(184, 149, 42, 0.22)",
                       fontSize: "0.88rem",
                       outline: "none",
-                      background: "#FAF7F2",
+                      background: "rgba(255, 255, 255, 0.72)",
+                      backdropFilter: "blur(10px)",
                       color: "var(--navy-deepest)",
                     }}
                   />
@@ -276,10 +283,11 @@ export default function Contact() {
                       width: "100%",
                       padding: "0.75rem 0.95rem",
                       borderRadius: "10px",
-                      border: "1px solid rgba(9, 21, 35, 0.15)",
+                      border: "1px solid rgba(184, 149, 42, 0.22)",
                       fontSize: "0.88rem",
                       outline: "none",
-                      background: "#FAF7F2",
+                      background: "rgba(255, 255, 255, 0.72)",
+                      backdropFilter: "blur(10px)",
                       color: "var(--navy-deepest)",
                     }}
                   >

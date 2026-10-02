@@ -122,6 +122,25 @@ export default function Hero() {
                   fontWeight: 700,
                   letterSpacing: "0.18em",
                   color: "var(--navy-deepest)",
+                  background: "rgba(255, 255, 255, 0.55)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  padding: "0.35rem 0.95rem",
+                  borderRadius: "9999px",
+                  border: "1px solid rgba(184, 149, 42, 0.2)",
+                  boxShadow: "0 4px 16px rgba(13, 30, 46, 0.04)",
+                  transition: "all 0.25s ease",
+                  cursor: "default",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.borderColor = "var(--gold-mid)";
+                  e.currentTarget.style.boxShadow = "0 8px 24px rgba(184, 149, 42, 0.22)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "rgba(184, 149, 42, 0.2)";
+                  e.currentTarget.style.boxShadow = "0 4px 16px rgba(13, 30, 46, 0.04)";
                 }}
               >
                 {pillar}
@@ -198,8 +217,9 @@ export default function Hero() {
           zIndex: 2,
           borderTop: "1px solid rgba(184,149,42,0.2)",
           borderBottom: "1px solid rgba(184,149,42,0.12)",
-          background: "rgba(255, 255, 255, 0.75)",
-          backdropFilter: "blur(12px)",
+          background: "rgba(255, 255, 255, 0.45)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
           padding: "0.85rem 0",
           overflow: "hidden",
           whiteSpace: "nowrap",

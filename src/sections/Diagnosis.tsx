@@ -53,6 +53,8 @@ export default function Diagnosis() {
   const [visible, setVisible] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState<number>(0);
   const [animatedScores, setAnimatedScores] = useState<number[]>(auditTracks.map(() => 0));
+  const [isHovered, setIsHovered] = useState(false);
+  const [animatingContent, setAnimatingContent] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -77,6 +79,29 @@ export default function Diagnosis() {
       }, 100 + i * 80);
     });
   }, [visible]);
+
+  // Autonomous dynamic cycling: advances every 4.2s if user is not hovering
+  useEffect(() => {
+    if (!visible || isHovered) return;
+    const timer = setInterval(() => {
+      setAnimatingContent(true);
+      setTimeout(() => {
+        setSelectedTrack((prev) => (prev + 1) % auditTracks.length);
+        setAnimatingContent(false);
+      }, 200);
+    }, 4200);
+
+    return () => clearInterval(timer);
+  }, [visible, isHovered]);
+
+  const selectTrackDirectly = (idx: number) => {
+    if (idx === selectedTrack) return;
+    setAnimatingContent(true);
+    setTimeout(() => {
+      setSelectedTrack(idx);
+      setAnimatingContent(false);
+    }, 180);
+  };
 
   const current = auditTracks[selectedTrack];
 
@@ -115,9 +140,9 @@ export default function Diagnosis() {
           top: "15%",
           left: "50%",
           transform: "translateX(-50%)",
-          width: "700px",
-          height: "400px",
-          background: "radial-gradient(ellipse, rgba(184, 149, 42, 0.08) 0%, rgba(255, 255, 255, 0) 70%)",
+          width: "750px",
+          height: "420px",
+          background: "radial-gradient(ellipse, rgba(184, 149, 42, 0.09) 0%, rgba(255, 255, 255, 0) 70%)",
           borderRadius: "50%",
           filter: "blur(50px)",
           pointerEvents: "none",
@@ -128,6 +153,43 @@ export default function Diagnosis() {
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         {/* Symmetrical Header */}
         <div style={{ textAlign: "center", maxWidth: "740px", margin: "0 auto 3rem" }}>
+          {/* Subtle live radar scanning pill */}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.55rem",
+              background: "rgba(184, 149, 42, 0.12)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(184, 149, 42, 0.28)",
+              padding: "0.3rem 0.85rem",
+              borderRadius: "9999px",
+              marginBottom: "1rem",
+            }}
+          >
+            <span
+              style={{
+                width: "7px",
+                height: "7px",
+                borderRadius: "50%",
+                background: "var(--gold-mid)",
+                boxShadow: "0 0 10px var(--gold-mid)",
+                animation: "pulse 2s infinite",
+              }}
+            />
+            <span
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--gold-deep)",
+              }}
+            >
+              Auditoría Preventiva Directa
+            </span>
+          </div>
+
           <h2
             className="text-display-md"
             style={{
@@ -154,8 +216,10 @@ export default function Diagnosis() {
           </p>
         </div>
 
-        {/* Symmetrical Diagnostic Cockpit: Left Track List + Right Prescription Box */}
+        {/* Symmetrical Diagnostic Cockpit with Translucent Glass Panels showing Canvas behind */}
         <div
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -164,20 +228,21 @@ export default function Diagnosis() {
           }}
           className="diagnosis-grid"
         >
-          {/* Left Column: Compact Track Bars without status pills */}
+          {/* Left Column: Translucent Track Bars with Living Indicators */}
           <div
             style={{
-              background: "rgba(255, 255, 255, 0.88)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(184, 149, 42, 0.22)",
-              boxShadow: "0 12px 32px rgba(13, 30, 46, 0.06)",
-              borderRadius: "18px",
-              padding: "1.25rem 1.5rem",
+              background: "rgba(255, 255, 255, 0.42)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              border: "1.5px solid rgba(184, 149, 42, 0.22)",
+              boxShadow: "0 16px 44px rgba(13, 30, 46, 0.05)",
+              borderRadius: "20px",
+              padding: "1.4rem 1.6rem",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              gap: "0.65rem",
+              gap: "0.75rem",
+              transition: "background 0.3s ease, border-color 0.3s ease",
             }}
           >
             {auditTracks.map((track, idx) => {
@@ -187,25 +252,47 @@ export default function Diagnosis() {
               return (
                 <button
                   key={track.id}
-                  onClick={() => setSelectedTrack(idx)}
+                  onClick={() => selectTrackDirectly(idx)}
                   type="button"
                   style={{
                     display: "block",
                     width: "100%",
-                    padding: "0.85rem 1.1rem",
-                    borderRadius: "12px",
-                    background: isSelected ? "rgba(184, 149, 42, 0.12)" : "rgba(247, 244, 238, 0.65)",
-                    border: isSelected ? "1.5px solid var(--gold-mid)" : "1px solid rgba(184, 149, 42, 0.12)",
+                    padding: "0.85rem 1.15rem",
+                    borderRadius: "14px",
+                    background: isSelected
+                      ? "rgba(184, 149, 42, 0.16)"
+                      : "rgba(255, 255, 255, 0.36)",
+                    backdropFilter: "blur(10px)",
+                    WebkitBackdropFilter: "blur(10px)",
+                    border: isSelected
+                      ? "1.5px solid var(--gold-mid)"
+                      : "1px solid rgba(184, 149, 42, 0.14)",
+                    boxShadow: isSelected
+                      ? "0 8px 24px rgba(184, 149, 42, 0.18)"
+                      : "0 2px 8px rgba(9, 21, 35, 0.02)",
                     cursor: "pointer",
                     textAlign: "left",
-                    transition: "all 0.2s ease",
-                    transform: isSelected ? "translateX(4px)" : "translateX(0)",
+                    transition: "all 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
+                    transform: isSelected ? "translateX(6px)" : "translateX(0)",
                   }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                    <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#091523" }}>
-                      {track.name}
-                    </span>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+                      {isSelected && (
+                        <span
+                          style={{
+                            width: "6px",
+                            height: "6px",
+                            borderRadius: "50%",
+                            background: "var(--gold-mid)",
+                            boxShadow: "0 0 8px var(--gold-mid)",
+                          }}
+                        />
+                      )}
+                      <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#091523" }}>
+                        {track.name}
+                      </span>
+                    </div>
 
                     <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--gold-deep)", minWidth: "32px", textAlign: "right" }}>
                       {score}%
@@ -218,7 +305,9 @@ export default function Diagnosis() {
                       style={{
                         height: "100%",
                         width: `${score}%`,
-                        background: "linear-gradient(90deg, #B8952A, #8F721E)",
+                        background: isSelected
+                          ? "linear-gradient(90deg, #D4AF37, #B8952A)"
+                          : "linear-gradient(90deg, #B8952A, #8F721E)",
                         borderRadius: "2px",
                         transition: "width 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
                       }}
@@ -229,22 +318,29 @@ export default function Diagnosis() {
             })}
           </div>
 
-          {/* Right Column: Prescription Box */}
+          {/* Right Column: Translucent Prescription Box with Dynamic Disappearing/Appearing Content */}
           <div
             style={{
-              background: "rgba(255, 255, 255, 0.94)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(184, 149, 42, 0.28)",
-              boxShadow: "0 16px 40px rgba(13, 30, 46, 0.08)",
-              borderRadius: "18px",
-              padding: "1.75rem",
+              background: "rgba(255, 255, 255, 0.46)",
+              backdropFilter: "blur(22px)",
+              WebkitBackdropFilter: "blur(22px)",
+              border: "1.5px solid rgba(184, 149, 42, 0.28)",
+              boxShadow: "0 20px 48px rgba(13, 30, 46, 0.07)",
+              borderRadius: "20px",
+              padding: "1.85rem",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
+              transition: "border-color 0.3s ease",
             }}
           >
-            <div>
+            <div
+              style={{
+                opacity: animatingContent ? 0 : 1,
+                transform: animatingContent ? "translateY(8px)" : "translateY(0)",
+                transition: "opacity 0.22s ease, transform 0.22s ease",
+              }}
+            >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.85rem" }}>
                 <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--gold-deep)" }}>
                   HALLAZGO & SOLUCIÓN
@@ -254,7 +350,7 @@ export default function Diagnosis() {
                 </span>
               </div>
 
-              <h3 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#091523", marginBottom: "1.1rem" }}>
+              <h3 style={{ fontSize: "1.38rem", fontWeight: 700, color: "#091523", marginBottom: "1.1rem" }}>
                 {current.name}
               </h3>
 
@@ -268,19 +364,22 @@ export default function Diagnosis() {
                 </p>
               </div>
 
-              {/* Solution */}
+              {/* Solution Box */}
               <div
                 style={{
-                  background: "rgba(184, 149, 42, 0.08)",
-                  border: "1px solid rgba(184, 149, 42, 0.22)",
-                  borderRadius: "12px",
-                  padding: "1rem 1.1rem",
+                  background: "rgba(184, 149, 42, 0.1)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  border: "1px solid rgba(184, 149, 42, 0.25)",
+                  borderRadius: "14px",
+                  padding: "1.1rem 1.2rem",
+                  boxShadow: "0 6px 18px rgba(184, 149, 42, 0.08)",
                 }}
               >
                 <div style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--gold-deep)", marginBottom: "0.3rem" }}>
                   Solución directiva que aplicamos:
                 </div>
-                <p style={{ color: "#091523", fontSize: "0.92rem", fontWeight: 600, lineHeight: 1.55, margin: 0 }}>
+                <p style={{ color: "#091523", fontSize: "0.93rem", fontWeight: 600, lineHeight: 1.55, margin: 0 }}>
                   {current.solution}
                 </p>
               </div>
@@ -299,6 +398,10 @@ export default function Diagnosis() {
       </div>
 
       <style>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.4); opacity: 0.6; }
+        }
         @media (max-width: 820px) {
           .diagnosis-grid {
             grid-template-columns: 1fr !important;

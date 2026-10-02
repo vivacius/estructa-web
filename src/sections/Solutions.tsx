@@ -169,7 +169,9 @@ export default function Solutions() {
                 width: "44px",
                 height: "44px",
                 borderRadius: "50%",
-                background: "#FFFFFF",
+                background: "rgba(255, 255, 255, 0.65)",
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)",
                 border: "1.5px solid rgba(184, 149, 42, 0.35)",
                 color: "var(--navy-deepest)",
                 display: "flex",
@@ -201,7 +203,9 @@ export default function Solutions() {
                 width: "44px",
                 height: "44px",
                 borderRadius: "50%",
-                background: "#FFFFFF",
+                background: "rgba(255, 255, 255, 0.65)",
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)",
                 border: "1.5px solid rgba(184, 149, 42, 0.35)",
                 color: "var(--navy-deepest)",
                 display: "flex",
@@ -253,11 +257,13 @@ export default function Solutions() {
                   flex: "0 0 360px",
                   maxWidth: "360px",
                   scrollSnapAlign: "center",
-                  background: "#FFFFFF",
-                  border: isCurrent ? "2px solid var(--gold-mid)" : "1.5px solid rgba(184, 149, 42, 0.22)",
+                  background: isCurrent ? "rgba(255, 255, 255, 0.58)" : "rgba(255, 255, 255, 0.32)",
+                  backdropFilter: "blur(22px)",
+                  WebkitBackdropFilter: "blur(22px)",
+                  border: isCurrent ? "2px solid var(--gold-mid)" : "1.5px solid rgba(184, 149, 42, 0.2)",
                   boxShadow: isCurrent
-                    ? "0 22px 48px rgba(184, 149, 42, 0.22), 0 6px 16px rgba(9, 21, 35, 0.07)"
-                    : "0 10px 30px rgba(9, 21, 35, 0.05)",
+                    ? "0 24px 52px rgba(184, 149, 42, 0.22), 0 6px 18px rgba(9, 21, 35, 0.06)"
+                    : "0 10px 30px rgba(9, 21, 35, 0.04)",
                   borderRadius: "20px",
                   padding: "2rem 1.75rem",
                   display: "flex",
@@ -266,7 +272,7 @@ export default function Solutions() {
                   minHeight: "360px",
                   cursor: "pointer",
                   transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
-                  transform: isCurrent ? "translateY(-6px)" : "translateY(0)",
+                  transform: isCurrent ? "translateY(-8px) scale(1.01)" : "translateY(0)",
                 }}
               >
                 <div>
