@@ -3,11 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const roles = [
-  { title: "Director Financiero", desc: "Que entienda tus números y proyecciones" },
-  { title: "Abogado Empresarial", desc: "Que proteja y estructure tu empresa" },
-  { title: "Analista de Datos", desc: "Que convierta datos en decisiones" },
-  { title: "Consultor de Procesos", desc: "Que estandarice y optimice operaciones" },
-  { title: "Equipo Tecnológico", desc: "Que digitalice y automatice lo que hoy es manual" },
+  { title: "Dirección Financiera", desc: "Control de flujo de caja, márgenes reales y recuperación de cartera" },
+  { title: "Asesoría Legal y Contractual", desc: "Contratos comerciales, acuerdos entre socios y cumplimiento laboral" },
+  { title: "Estandarización de Procesos", desc: "Flujos de trabajo ordenados para no depender de la memoria de nadie" },
+  { title: "Control de Gestión y Datos", desc: "Tableros con indicadores directivos claros para gerenciar con certeza" },
+  { title: "Automatización Operativa", desc: "Eliminación de reprocesos manuales y trámites administrativos innecesarios" },
 ];
 
 export default function ExternalTeam() {
@@ -39,7 +39,7 @@ export default function ExternalTeam() {
       <div style={{ position: "absolute", inset: 0 }}>
         <Image
           src="/images/centro-mando.png"
-          alt="Centro de comando estratégico"
+          alt="Centro de mando estratégico"
           fill
           style={{ objectFit: "cover", objectPosition: "center" }}
           sizes="100vw"
@@ -47,23 +47,11 @@ export default function ExternalTeam() {
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(135deg, rgba(9,21,35,0.92) 0%, rgba(9,21,35,0.75) 50%, rgba(13,30,46,0.88) 100%)",
+          background: "linear-gradient(135deg, rgba(9,21,35,0.94) 0%, rgba(9,21,35,0.85) 50%, rgba(13,30,46,0.92) 100%)",
         }} />
       </div>
 
-      {/* Top Edge Transition Ramp */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "60px",
-          background: "linear-gradient(to bottom, #FEFCF8 0%, rgba(9,21,35,0.7) 50%, rgba(9,21,35,0.95) 100%)",
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
-      />
+      {/* Clean 1px top hairline rule */}
       <div
         style={{
           position: "absolute",
@@ -71,7 +59,7 @@ export default function ExternalTeam() {
           left: "5%",
           right: "5%",
           height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(184,149,42,0.35), transparent)",
+          background: "rgba(184,149,42,0.25)",
           zIndex: 2,
         }}
       />
@@ -87,11 +75,11 @@ export default function ExternalTeam() {
             }}
           >
             <h2 className="text-display-lg" style={{ color: "var(--ivory)", marginBottom: "1.5rem" }}>
-              Una pyme no necesita<br />
-              <span style={{ color: "var(--gold-mid)" }}>contratar cinco departamentos.</span>
+              Tu empresa no necesita<br />
+              <span style={{ color: "var(--gold-mid)" }}>asumir el costo de 5 departamentos internos.</span>
             </h2>
             <p className="text-body-lg" style={{ color: "var(--text-muted-dark)", marginBottom: "2rem", lineHeight: 1.75 }}>
-              Una empresa pequeña normalmente no puede tener internamente a todos los especialistas que necesita. Y no debería.
+              Una empresa en crecimiento necesita criterio experto en cada área, pero contratar nóminas directivas completas genera sobrecostos fijos. 
             </p>
             <div style={{
               padding: "1.5rem 2rem",
@@ -101,7 +89,7 @@ export default function ExternalTeam() {
               marginBottom: "2.5rem",
             }}>
               <p className="text-display-sm" style={{ color: "var(--ivory)", fontStyle: "italic", lineHeight: 1.4 }}>
-                "ESTRUCTA puede convertirse en ese <span style={{ color: "var(--gold-mid)", fontStyle: "normal" }}>equipo externo.</span>"
+                "ESTRUCTA actúa como ese <span style={{ color: "var(--gold-mid)", fontStyle: "normal" }}>equipo consultor y directivo de cabecera.</span>"
               </p>
             </div>
             <a
@@ -109,7 +97,7 @@ export default function ExternalTeam() {
               className="btn btn-primary"
               onClick={(e) => { e.preventDefault(); document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" }); }}
             >
-              Hablemos de tu empresa
+              Conversemos sobre tu empresa
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>

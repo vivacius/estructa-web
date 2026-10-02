@@ -7,7 +7,6 @@ import Diagnosis from "@/sections/Diagnosis";
 import Methodology from "@/sections/Methodology";
 import Solutions from "@/sections/Solutions";
 import ExternalTeam from "@/sections/ExternalTeam";
-import Technology from "@/sections/Technology";
 import Contact from "@/sections/Contact";
 
 export default function Home() {
@@ -37,10 +36,7 @@ export default function Home() {
         {/* 7. EXTERNAL TEAM — dark, full-bleed command center */}
         <ExternalTeam />
 
-        {/* 8. TECHNOLOGY — ivory, sequential questions */}
-        <Technology />
-
-        {/* 9. CONTACT — deep navy, form */}
+        {/* 8. CONTACT — deep navy, compact direct form */}
         <Contact />
       </main>
 

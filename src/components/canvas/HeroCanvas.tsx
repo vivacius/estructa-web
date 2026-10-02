@@ -108,7 +108,7 @@ export default function HeroCanvas() {
     };
 
     // Strategic pillars anchored along the horizontal canvas
-    const labels = ["LEGAL", "FINANZAS", "ESTRATEGIA", "TECNOLOGÍA", "INTELIGENCIA 360°"];
+    const labels = ["LEGAL", "FINANZAS", "ESTRATEGIA", "PROCESOS", "SOLUCIONES"];
     let nodes: NodePoint[] = [];
     let particles: Particle[] = [];
 

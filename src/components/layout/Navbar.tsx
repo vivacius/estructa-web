@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const navLinks = [
-  { href: "#que-hacemos", label: "Qué hacemos", id: "que-hacemos" },
-  { href: "#diagnostico", label: "Diagnóstico 360°", id: "diagnostico" },
+  { href: "#que-hacemos", label: "Servicios", id: "que-hacemos" },
+  { href: "#diagnostico", label: "Diagnóstico", id: "diagnostico" },
   { href: "#soluciones", label: "Soluciones", id: "soluciones" },
-  { href: "#nosotros", label: "Nosotros", id: "nosotros" },
+  { href: "#nosotros", label: "Equipo", id: "nosotros" },
   { href: "#contacto", label: "Contacto", id: "contacto" },
 ];
 

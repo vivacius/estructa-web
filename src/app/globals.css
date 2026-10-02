@@ -380,36 +380,3 @@ button {
 @media (min-width: 769px) {
   .show-mobile-only { display: none !important; }
 }
-
-/* ---- Dynamic Section Kinetic Divider ---- */
-@keyframes kinetic-sweep {
-  0% { transform: translateX(-200px); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateX(calc(100vw + 200px)); opacity: 0; }
-}
-
-.kinetic-divider {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  overflow: hidden;
-  pointer-events: none;
-}
-.kinetic-divider::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(184,149,42,0.18), transparent);
-}
-.kinetic-divider::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 180px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #B8952A, #F5D77F, transparent);
-  box-shadow: 0 0 12px #B8952A;
-  animation: kinetic-sweep 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}

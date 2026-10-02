@@ -99,7 +99,7 @@ export default function Diagnosis() {
       style={{
         position: "relative",
         overflow: "hidden",
-        padding: "clamp(2.75rem, 4.5vw, 3.75rem) 0",
+        padding: "clamp(4.5rem, 6.5vw, 6rem) 0",
         color: "var(--ivory)",
       }}
     >
@@ -117,7 +117,7 @@ export default function Diagnosis() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(135deg, rgba(9,21,35,0.95) 0%, rgba(9,21,35,0.88) 50%, rgba(13,30,46,0.94) 100%)",
+              "linear-gradient(135deg, rgba(9,21,35,0.96) 0%, rgba(9,21,35,0.88) 50%, rgba(13,30,46,0.95) 100%)",
           }}
         />
       </div>
@@ -130,46 +130,46 @@ export default function Diagnosis() {
           left: "5%",
           right: "5%",
           height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(184,149,42,0.35), transparent)",
+          background: "rgba(184,149,42,0.22)",
           zIndex: 2,
         }}
       />
 
-      <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "0.5rem" }}>
-        {/* Compact Header */}
-        <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 1.75rem" }}>
+      <div className="container" style={{ position: "relative", zIndex: 2 }}>
+        {/* Symmetrical Header */}
+        <div style={{ textAlign: "center", maxWidth: "720px", margin: "0 auto 3rem" }}>
           <h2
             className="text-display-md"
             style={{
               color: "#FFFFFF",
-              marginBottom: "0.5rem",
+              marginBottom: "0.6rem",
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(16px)",
               transition: "opacity 0.5s ease, transform 0.5s ease",
             }}
           >
-            Diagnóstico 360°: <span style={{ color: "var(--gold-mid)" }}>la verdad de tu empresa</span>
+            Diagnóstico inicial: <span style={{ color: "var(--gold-mid)" }}>la situación real de tu empresa</span>
           </h2>
 
           <p
             style={{
               color: "rgba(240,237,232,0.8)",
-              fontSize: "0.92rem",
-              lineHeight: 1.5,
+              fontSize: "0.95rem",
+              lineHeight: 1.6,
               opacity: visible ? 1 : 0,
-              transition: "opacity 0.5s ease 0.1s",
+              transition: "opacity 0.5s ease 0.15s",
             }}
           >
-            Haz clic en cada dimensión para ver el hallazgo habitual y la solución aplicada.
+            Selecciona cada área para conocer los problemas más comunes que resolvemos y las soluciones que implementamos.
           </p>
         </div>
 
-        {/* Compact Diagnostic Cockpit: Left Interactive Track List + Right Quick Prescription */}
+        {/* Symmetrical Diagnostic Cockpit: Left Track List + Right Prescription Box */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.1fr 1fr",
-            gap: "1.5rem",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "2.5rem",
             alignItems: "stretch",
           }}
           className="diagnosis-grid"
@@ -284,7 +284,7 @@ export default function Diagnosis() {
               {/* Finding */}
               <div style={{ marginBottom: "1rem" }}>
                 <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#f87171", marginBottom: "0.25rem" }}>
-                  ⚠ Lo que encontramos en la auditoría:
+                  Situación habitual:
                 </div>
                 <p style={{ color: "rgba(240,237,232,0.85)", fontSize: "0.88rem", lineHeight: 1.5, margin: 0 }}>
                   {current.finding}
@@ -301,7 +301,7 @@ export default function Diagnosis() {
                 }}
               >
                 <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--gold-mid)", marginBottom: "0.25rem" }}>
-                  ✦ La Solución ESTRUCTA:
+                  Solución o servicio que aplicamos:
                 </div>
                 <p style={{ color: "var(--ivory)", fontSize: "0.88rem", fontWeight: 500, lineHeight: 1.5, margin: 0 }}>
                   {current.solution}
@@ -309,22 +309,13 @@ export default function Diagnosis() {
               </div>
             </div>
 
-            <div style={{ marginTop: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
-              <span style={{ fontSize: "0.76rem", color: "rgba(240,237,232,0.6)" }}>
-                Auditoría preliminar confidencial
+            <div style={{ marginTop: "1rem", paddingTop: "0.85rem", borderTop: "1px solid rgba(184,149,42,0.15)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: "0.78rem", color: "rgba(240,237,232,0.6)" }}>
+                Atención directa y confidencial
               </span>
-
-              <a
-                href="#contacto"
-                className="btn btn-primary"
-                style={{
-                  padding: "0.65rem 1.4rem",
-                  fontSize: "0.82rem",
-                  borderRadius: "9999px",
-                }}
-              >
-                Agendar Diagnóstico
-              </a>
+              <span style={{ fontSize: "0.78rem", color: "var(--gold-mid)", fontWeight: 600 }}>
+                ESTRUCTA · Soluciones Integradas
+              </span>
             </div>
           </div>
         </div>

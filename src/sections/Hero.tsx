@@ -149,8 +149,8 @@ export default function Hero() {
             transition: "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s",
           }}
         >
-          Una firma multidisciplinaria que integra control financiero, blindaje jurídico,
-          organización directiva e inteligencia de datos sobre el mismo negocio.
+          Servicios y soluciones empresariales para ordenar y fortalecer tu negocio. Integramos
+          asesoría legal, control financiero, estrategia directiva y optimización de procesos en un solo equipo.
         </p>
 
         {/* Step 5: Focused Executive CTA Group */}
@@ -205,7 +205,7 @@ export default function Hero() {
               backdropFilter: "blur(8px)",
             }}
           >
-            Conoce nuestro enfoque
+            Conoce nuestros servicios
           </a>
         </div>
 
@@ -234,33 +234,37 @@ export default function Hero() {
           }}
         >
           {[
-            "DIAGNÓSTICO 360°",
+            "SOLUCIONES EMPRESARIALES",
             "✦",
-            "CONTROL FINANCIERO PYME",
+            "CONTROL DE CAJA Y FINANZAS",
             "✦",
-            "BLINDAJE CONTRACTUAL",
+            "BLINDAJE CONTRACTUAL Y LABORAL",
             "✦",
-            "GERENCIA CON DATOS",
+            "GESTIÓN DE CARTERA",
             "✦",
-            "CARTERA INTELIGENTE",
+            "OPTIMIZACIÓN DE PROCESOS",
             "✦",
-            "TRANSFORMACIÓN DIGITAL",
+            "ESTRUCTURA DE COSTOS Y MÁRGENES",
             "✦",
-            "ESTRUCTURA SOCIETARIA",
+            "COMITÉ DIRECTIVO ACOMPAÑADO",
             "✦",
-            "DIAGNÓSTICO 360°",
+            "DIAGNÓSTICO INICIAL",
             "✦",
-            "CONTROL FINANCIERO PYME",
+            "SOLUCIONES EMPRESARIALES",
             "✦",
-            "BLINDAJE CONTRACTUAL",
+            "CONTROL DE CAJA Y FINANZAS",
             "✦",
-            "GERENCIA CON DATOS",
+            "BLINDAJE CONTRACTUAL Y LABORAL",
             "✦",
-            "CARTERA INTELIGENTE",
+            "GESTIÓN DE CARTERA",
             "✦",
-            "TRANSFORMACIÓN DIGITAL",
+            "OPTIMIZACIÓN DE PROCESOS",
             "✦",
-            "ESTRUCTURA SOCIETARIA",
+            "ESTRUCTURA DE COSTOS Y MÁRGENES",
+            "✦",
+            "COMITÉ DIRECTIVO ACOMPAÑADO",
+            "✦",
+            "DIAGNÓSTICO INICIAL",
           ].map((item, index) => (
             <span
               key={index}

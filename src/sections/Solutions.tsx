@@ -4,50 +4,44 @@ import { useEffect, useRef, useState } from "react";
 const solutions = [
   {
     title: "Control Financiero Pyme",
-    desc: "Costos reales, margen por producto, flujo de caja semanal y punto de equilibrio. Saber exactamente cuánto ganas y por qué.",
+    desc: "Cálculo de costos reales, margen por producto, flujo de caja semanal y punto de equilibrio para saber con exactitud cuánto ganas.",
     num: "01",
-    size: "large",
     tag: "Finanzas & Caja",
     highlight: "Rentabilidad Real",
   },
   {
-    title: "Cartera Inteligente",
-    desc: "Recuperación de cartera vencida, políticas de crédito, alertas tempranas y automatización de cobranza sin dañar la relación comercial.",
+    title: "Gestión y Cobro de Cartera",
+    desc: "Recuperación de cuentas por cobrar vencidas, políticas de crédito claras y rutinas de seguimiento sin deteriorar relaciones comerciales.",
     num: "02",
-    size: "small",
-    tag: "Cobranza",
-    highlight: "Recuperación de Liquidez",
+    tag: "Cobranza & Liquidez",
+    highlight: "Recuperación de Flujo",
   },
   {
-    title: "Gerencia con Datos",
-    desc: "Dashboards ejecutivos en tiempo real con ventas, margen, inventario y KPIs directivos clave accesibles desde tu celular.",
+    title: "Tableros de Control Gerencial",
+    desc: "Visibilidad en tiempo real de ventas, márgenes, inventario y cuentas clave para tomar decisiones gerenciales con datos seguros.",
     num: "03",
-    size: "small",
-    tag: "Business Intelligence",
-    highlight: "Decisiones con Datos",
+    tag: "Control Directivo",
+    highlight: "Certeza en Números",
   },
   {
-    title: "Empresa en Regla",
-    desc: "Blindaje contractual con clientes, empleados y socios. Mitigación de riesgos laborales y estructura jurídica sólida para proteger tu patrimonio.",
+    title: "Blindaje Legal & Contratos",
+    desc: "Contratos comerciales, acuerdos entre socios y prevención de contingencias laborales para proteger el patrimonio de la empresa.",
     num: "04",
-    size: "medium",
     tag: "Legal & Cumplimiento",
-    highlight: "Blindaje 100%",
+    highlight: "Protección Patrimonial",
   },
   {
-    title: "Digitalización Administrativa",
-    desc: "Eliminación de tareas manuales repetitivas: flujos de aprobación digital, automatización de facturación y estandarización operativa.",
+    title: "Optimización y Automatización",
+    desc: "Estandarización de flujos de trabajo operativos y eliminación de trámites manuales repetitivos para ahorrar tiempo y evitar reprocesos.",
     num: "05",
-    size: "medium",
-    tag: "Eficiencia",
-    highlight: "Automatización",
+    tag: "Eficiencia Operativa",
+    highlight: "Menor Carga Operativa",
   },
   {
-    title: "Comité Directivo Externo",
-    desc: "Acompañamiento periódico multidisciplinario: revisamos mes a mes tus números, alertamos contingencias y guiamos la toma de decisiones estratégicas.",
+    title: "Comité Directivo Acompañado",
+    desc: "Acompañamiento periódico como aliados de cabecera: sesionamos mes a mes, vigilamos cifras y guiamos decisiones clave del negocio.",
     num: "06",
-    size: "wide",
-    tag: "Gobernanza",
+    tag: "Dirección Estratégica",
     highlight: "Acompañamiento Continuo",
   },
 ];
@@ -72,24 +66,26 @@ export default function Solutions() {
       ref={ref as React.RefObject<HTMLElement>}
       id="soluciones"
       style={{
-        background: "linear-gradient(180deg, #FBF9F5 0%, #FFFFFF 50%, #F5F0E6 100%)",
-        padding: "clamp(3.5rem, 5.5vw, 4.75rem) 0",
+        background: "linear-gradient(135deg, rgba(9,21,35,0.96) 0%, rgba(9,21,35,0.88) 50%, rgba(13,30,46,0.95) 100%)",
+        padding: "clamp(4.5rem, 6.5vw, 6rem) 0",
         position: "relative",
+        overflow: "hidden",
+        color: "var(--ivory)",
       }}
     >
-      {/* Dynamic Animated Kinetic Divider */}
-      <div className="kinetic-divider" style={{ position: "absolute", top: 0, left: 0 }} />
+      {/* Clean 1px top border */}
+      <div style={{ position: "absolute", top: 0, left: "5%", right: "5%", height: "1px", background: "rgba(184,149,42,0.22)" }} />
 
-      <div className="container">
-        {/* High-Contrast Header */}
-        <div style={{ marginBottom: "2.5rem" }}>
+      <div className="container" style={{ position: "relative", zIndex: 2 }}>
+        {/* Symmetrical High-Contrast Header */}
+        <div style={{ marginBottom: "3rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "2rem", flexWrap: "wrap" }}>
             <div>
               <h2
                 className="text-display-lg"
                 style={{
-                  color: "var(--navy-deepest)",
-                  maxWidth: "520px",
+                  color: "#FFFFFF",
+                  maxWidth: "540px",
                   lineHeight: 1.1,
                   opacity: visible ? 1 : 0,
                   transform: visible ? "translateY(0)" : "translateY(20px)",
@@ -100,7 +96,7 @@ export default function Solutions() {
                 <br />
                 <span
                   style={{
-                    background: "linear-gradient(135deg, #091523 0%, #B8952A 70%)",
+                    background: "linear-gradient(135deg, #FFFFFF 0%, #B8952A 70%, #F5D77F 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
@@ -112,39 +108,40 @@ export default function Solutions() {
 
             <p
               style={{
-                color: "var(--navy-mid)",
-                maxWidth: "360px",
+                color: "rgba(240, 237, 232, 0.8)",
+                maxWidth: "440px",
                 fontSize: "0.95rem",
                 lineHeight: 1.65,
-                fontWeight: 500,
+                fontWeight: 450,
                 opacity: visible ? 1 : 0,
                 transition: "opacity 0.6s ease 0.15s",
               }}
             >
-              No vendemos software genérico. Diagnosticamos primero la raíz del problema y estructuramos soluciones de impacto inmediato.
+              Servicios y soluciones a la medida de tu operación. Diagnosticamos primero la causa del problema y estructuramos un plan de acción concreto.
             </p>
           </div>
         </div>
 
-        {/* High-Contrast Bento Grid */}
+        {/* Perfectly Symmetrical 3x2 Grid */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1.25rem",
+            gap: "1.5rem",
           }}
-          className="solutions-bento"
+          className="solutions-symmetric-grid"
         >
           {solutions.map((sol, i) => (
             <div
               key={sol.title}
               style={{
-                gridColumn: sol.size === "large" ? "span 2" : sol.size === "wide" ? "span 3" : "span 1",
-                background: "#FFFFFF",
-                border: "1.5px solid rgba(13, 30, 46, 0.1)",
-                boxShadow: "0 8px 30px rgba(9, 21, 35, 0.05), 0 1px 3px rgba(0,0,0,0.02)",
-                borderRadius: "20px",
-                padding: sol.size === "wide" ? "1.75rem 2.25rem" : "1.75rem",
+                background: "rgba(13, 30, 46, 0.72)",
+                backdropFilter: "blur(14px)",
+                border: "1px solid rgba(184, 149, 42, 0.18)",
+                borderLeft: "3.5px solid rgba(184, 149, 42, 0.65)",
+                boxShadow: "0 12px 32px rgba(0, 0, 0, 0.25)",
+                borderRadius: "16px",
+                padding: "1.75rem 1.6rem",
                 position: "relative",
                 overflow: "hidden",
                 opacity: visible ? 1 : 0,
@@ -153,31 +150,33 @@ export default function Solutions() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
+                minHeight: "220px",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "var(--gold-mid)";
+                el.style.borderColor = "rgba(184, 149, 42, 0.45)";
+                el.style.borderLeftColor = "var(--gold-mid)";
                 el.style.transform = "translateY(-4px)";
-                el.style.boxShadow = "0 16px 40px rgba(184, 149, 42, 0.16), 0 2px 8px rgba(9, 21, 35, 0.06)";
+                el.style.boxShadow = "0 18px 40px rgba(0,0,0,0.35), 0 0 20px rgba(184,149,42,0.12)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "rgba(13, 30, 46, 0.1)";
+                el.style.borderColor = "rgba(184, 149, 42, 0.18)";
+                el.style.borderLeftColor = "rgba(184, 149, 42, 0.65)";
                 el.style.transform = "translateY(0)";
-                el.style.boxShadow = "0 8px 30px rgba(9, 21, 35, 0.05)";
+                el.style.boxShadow = "0 12px 32px rgba(0, 0, 0, 0.25)";
               }}
             >
-              {/* Header inside card */}
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
                   <span
                     style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: "0.75rem",
+                      fontSize: "0.72rem",
                       fontWeight: 700,
                       color: "var(--gold-mid)",
                       background: "rgba(184,149,42,0.12)",
-                      padding: "0.2rem 0.6rem",
+                      padding: "0.2rem 0.55rem",
                       borderRadius: "6px",
                       letterSpacing: "0.08em",
                     }}
@@ -191,11 +190,11 @@ export default function Solutions() {
                       fontWeight: 700,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
-                      color: "var(--navy-deepest)",
-                      background: "rgba(13, 30, 46, 0.05)",
-                      padding: "0.25rem 0.65rem",
+                      color: "rgba(240, 237, 232, 0.75)",
+                      background: "rgba(255, 255, 255, 0.05)",
+                      padding: "0.22rem 0.6rem",
                       borderRadius: "9999px",
-                      border: "1px solid rgba(13, 30, 46, 0.08)",
+                      border: "1px solid rgba(184, 149, 42, 0.15)",
                     }}
                   >
                     {sol.tag}
@@ -205,10 +204,10 @@ export default function Solutions() {
                 <h3
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontSize: sol.size === "large" ? "1.45rem" : "1.2rem",
+                    fontSize: "1.22rem",
                     fontWeight: 700,
-                    color: "var(--navy-deepest)",
-                    marginBottom: "0.6rem",
+                    color: "#FFFFFF",
+                    marginBottom: "0.65rem",
                     lineHeight: 1.25,
                   }}
                 >
@@ -217,36 +216,33 @@ export default function Solutions() {
 
                 <p
                   style={{
-                    color: "var(--navy-mid)",
-                    fontSize: "0.92rem",
+                    color: "rgba(240, 237, 232, 0.8)",
+                    fontSize: "0.88rem",
                     lineHeight: 1.6,
-                    fontWeight: 450,
+                    margin: 0,
                   }}
                 >
                   {sol.desc}
                 </p>
               </div>
 
-              {/* Bottom Feature Pill */}
-              <div style={{ marginTop: "1.25rem", paddingTop: "0.85rem", borderTop: "1px solid rgba(13, 30, 46, 0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "var(--gold-mid)" }}>
+              {/* Bottom Feature Indicator */}
+              <div style={{ marginTop: "1.35rem", paddingTop: "0.85rem", borderTop: "1px solid rgba(184, 149, 42, 0.12)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: "0.76rem", fontWeight: 600, color: "var(--gold-mid)" }}>
                   ✦ {sol.highlight}
                 </span>
 
-                <a
-                  href="#contacto"
+                <div
                   style={{
-                    fontSize: "0.78rem",
-                    fontWeight: 700,
-                    color: "var(--navy-deepest)",
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.3rem",
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    background: "var(--gold-mid)",
+                    animation: "pulse-gold 2s ease-in-out infinite",
+                    animationDelay: `${i * 0.3}s`,
+                    flexShrink: 0,
                   }}
-                >
-                  Consultar <span>→</span>
-                </a>
+                />
               </div>
             </div>
           ))}
@@ -254,12 +250,14 @@ export default function Solutions() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .solutions-bento {
-            grid-template-columns: 1fr !important;
+        @media (max-width: 980px) {
+          .solutions-symmetric-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
-          .solutions-bento > div {
-            grid-column: span 1 !important;
+        }
+        @media (max-width: 640px) {
+          .solutions-symmetric-grid {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
