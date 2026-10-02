@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const navLinks = [
+  { href: "#inicio", label: "Inicio", id: "inicio" },
   { href: "#que-hacemos", label: "Servicios", id: "que-hacemos" },
   { href: "#diagnostico", label: "Diagnóstico", id: "diagnostico" },
   { href: "#soluciones", label: "Soluciones", id: "soluciones" },

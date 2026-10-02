@@ -33,18 +33,31 @@ export default function Contact() {
       ref={ref as React.RefObject<HTMLElement>}
       id="contacto"
       style={{
-        background: "linear-gradient(180deg, #091523 0%, #060F1A 100%)",
-        color: "var(--ivory)",
+        background: "radial-gradient(ellipse at 50% 15%, #FFFFFF 0%, #FAF7F2 50%, #F3ECE1 100%)",
+        color: "var(--navy-deepest)",
         padding: "clamp(4.5rem, 6.5vw, 6rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Crisp fine hairline border */}
-      <div style={{ position: "absolute", top: 0, left: "5%", right: "5%", height: "1px", background: "rgba(184,149,42,0.22)" }} />
+      {/* Decorative Architectural Grid */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "linear-gradient(rgba(184,149,42,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(184,149,42,0.035) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
 
-      {/* Dynamic Warm Ambient Connection Network Canvas */}
+      {/* Dynamic Light Luxury Contact Canvas with wandering & pivoting logo watermark */}
       <ContactCanvas />
+
+      {/* Crisp fine hairline border */}
+      <div style={{ position: "absolute", top: 0, left: "5%", right: "5%", height: "1px", background: "rgba(184,149,42,0.22)", zIndex: 2 }} />
 
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         {/* Symmetrical Header */}
@@ -52,26 +65,26 @@ export default function Contact() {
           <h2
             className="text-display-md"
             style={{
-              color: "#FFFFFF",
+              color: "var(--navy-deepest)",
               marginBottom: "0.6rem",
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(16px)",
               transition: "opacity 0.5s ease, transform 0.5s ease",
             }}
           >
-            Conversemos sobre <span style={{ color: "var(--gold-mid)" }}>tu empresa</span>
+            Contacto y atención <span style={{ color: "var(--gold-primary)" }}>directa</span>
           </h2>
 
           <p
             style={{
-              color: "rgba(240,237,232,0.8)",
+              color: "var(--navy-mid)",
               fontSize: "0.95rem",
               lineHeight: 1.6,
               opacity: visible ? 1 : 0,
               transition: "opacity 0.5s ease 0.1s",
             }}
           >
-            Analizamos la situación financiera, jurídica y operativa de tu negocio con total reserva. Sin compromisos comerciales.
+            Analizamos la situación financiera, jurídica y operativa de tu negocio con total reserva y sin compromisos.
           </p>
         </div>
 
@@ -87,48 +100,47 @@ export default function Contact() {
           }}
           className="contact-symmetric-grid"
         >
-          {/* Left Column: Direct Executive Contact */}
+          {/* Left Column: Direct Executive Contact Card */}
           <div
             style={{
-              background: "rgba(13, 30, 46, 0.72)",
-              border: "1px solid rgba(184,149,42,0.2)",
-              borderLeft: "3.5px solid var(--gold-mid)",
-              borderRadius: "18px",
-              padding: "2.25rem 2rem",
+              background: "#FFFFFF",
+              border: "1.5px solid rgba(184,149,42,0.25)",
+              borderLeft: "4px solid var(--gold-mid)",
+              borderRadius: "20px",
+              padding: "2.5rem 2.25rem",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              backdropFilter: "blur(14px)",
-              boxShadow: "0 14px 36px rgba(0,0,0,0.3)",
+              boxShadow: "0 14px 40px rgba(9, 21, 35, 0.06)",
             }}
           >
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 8px #22c55e" }} />
-                <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "var(--gold-mid)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                  Atención Directa
+                <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "var(--gold-primary)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  Canal Directo
                 </span>
               </div>
 
-              <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "0.6rem" }}>
+              <h3 style={{ fontSize: "1.35rem", fontWeight: 700, color: "var(--navy-deepest)", marginBottom: "0.6rem" }}>
                 Canal de consulta directa
               </h3>
 
-              <p style={{ color: "rgba(240,237,232,0.8)", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
-                Escríbenos directamente para resolver dudas puntuales o coordinar una conversación con nuestro equipo directivo.
+              <p style={{ color: "var(--navy-mid)", fontSize: "0.92rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+                Escríbenos directamente para resolver dudas puntuales sobre tu empresa o coordinar una conversación con nuestro equipo directivo.
               </p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginBottom: "1.75rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontSize: "0.85rem", color: "rgba(240,237,232,0.85)" }}>
-                  <span style={{ color: "var(--gold-mid)" }}>✦</span>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginBottom: "2rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontSize: "0.88rem", color: "var(--navy-deepest)" }}>
+                  <span style={{ color: "var(--gold-primary)", fontWeight: 700 }}>✦</span>
                   <span>Respuesta ágil en horario laboral</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontSize: "0.85rem", color: "rgba(240,237,232,0.85)" }}>
-                  <span style={{ color: "var(--gold-mid)" }}>✦</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontSize: "0.88rem", color: "var(--navy-deepest)" }}>
+                  <span style={{ color: "var(--gold-primary)", fontWeight: 700 }}>✦</span>
                   <span>Conversación técnica con directores de área</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontSize: "0.85rem", color: "rgba(240,237,232,0.85)" }}>
-                  <span style={{ color: "var(--gold-mid)" }}>✦</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontSize: "0.88rem", color: "var(--navy-deepest)" }}>
+                  <span style={{ color: "var(--gold-primary)", fontWeight: 700 }}>✦</span>
                   <span>Confidencialidad absoluta garantizada</span>
                 </div>
               </div>
@@ -146,12 +158,12 @@ export default function Contact() {
                   gap: "0.65rem",
                   background: "#25D366",
                   color: "#FFFFFF",
-                  padding: "0.85rem 1.4rem",
+                  padding: "0.9rem 1.4rem",
                   borderRadius: "10px",
                   fontWeight: 700,
                   fontSize: "0.92rem",
                   textDecoration: "none",
-                  boxShadow: "0 8px 24px rgba(37,211,102,0.25)",
+                  boxShadow: "0 8px 24px rgba(37,211,102,0.28)",
                   transition: "transform 0.2s ease",
                 }}
               >
@@ -163,15 +175,14 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right Column: Symmetrical Dark Glass Form */}
+          {/* Right Column: Symmetrical Form Card */}
           <div
             style={{
-              background: "rgba(13, 30, 46, 0.72)",
-              border: "1px solid rgba(184,149,42,0.2)",
-              borderRadius: "18px",
-              padding: "2.25rem 2rem",
-              backdropFilter: "blur(14px)",
-              boxShadow: "0 14px 36px rgba(0,0,0,0.3)",
+              background: "#FFFFFF",
+              border: "1.5px solid rgba(184,149,42,0.25)",
+              borderRadius: "20px",
+              padding: "2.5rem 2.25rem",
+              boxShadow: "0 14px 40px rgba(9, 21, 35, 0.06)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -179,21 +190,21 @@ export default function Contact() {
           >
             {sent ? (
               <div style={{ textAlign: "center", padding: "2rem 0" }}>
-                <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "rgba(34,197,94,0.18)", color: "#22c55e", fontSize: "1.6rem", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem" }}>
+                <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "rgba(34,197,94,0.15)", color: "#16a34a", fontSize: "1.6rem", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem" }}>
                   ✓
                 </div>
-                <h4 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "0.5rem" }}>
+                <h4 style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--navy-deepest)", marginBottom: "0.5rem" }}>
                   Mensaje Recibido
                 </h4>
-                <p style={{ color: "rgba(240,237,232,0.8)", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                <p style={{ color: "var(--navy-mid)", fontSize: "0.9rem", lineHeight: 1.6 }}>
                   Nos pondremos en contacto contigo en breve para revisar tu caso con total confidencialidad.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--gold-mid)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
+                    <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--navy-deepest)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
                       Nombre *
                     </label>
                     <input
@@ -204,17 +215,17 @@ export default function Contact() {
                         width: "100%",
                         padding: "0.75rem 0.95rem",
                         borderRadius: "10px",
-                        border: "1px solid rgba(184,149,42,0.22)",
+                        border: "1px solid rgba(9, 21, 35, 0.15)",
                         fontSize: "0.88rem",
                         outline: "none",
-                        background: "rgba(9, 21, 35, 0.7)",
-                        color: "#FFFFFF",
+                        background: "#FAF7F2",
+                        color: "var(--navy-deepest)",
                       }}
                     />
                   </div>
 
                   <div>
-                    <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--gold-mid)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
+                    <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--navy-deepest)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
                       Empresa *
                     </label>
                     <input
@@ -225,18 +236,18 @@ export default function Contact() {
                         width: "100%",
                         padding: "0.75rem 0.95rem",
                         borderRadius: "10px",
-                        border: "1px solid rgba(184,149,42,0.22)",
+                        border: "1px solid rgba(9, 21, 35, 0.15)",
                         fontSize: "0.88rem",
                         outline: "none",
-                        background: "rgba(9, 21, 35, 0.7)",
-                        color: "#FFFFFF",
+                        background: "#FAF7F2",
+                        color: "var(--navy-deepest)",
                       }}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--gold-mid)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
+                  <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--navy-deepest)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
                     Teléfono o Correo *
                   </label>
                   <input
@@ -247,17 +258,17 @@ export default function Contact() {
                       width: "100%",
                       padding: "0.75rem 0.95rem",
                       borderRadius: "10px",
-                      border: "1px solid rgba(184,149,42,0.22)",
+                      border: "1px solid rgba(9, 21, 35, 0.15)",
                       fontSize: "0.88rem",
                       outline: "none",
-                      background: "rgba(9, 21, 35, 0.7)",
-                      color: "#FFFFFF",
+                      background: "#FAF7F2",
+                      color: "var(--navy-deepest)",
                     }}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--gold-mid)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
+                  <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--navy-deepest)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
                     Área de mayor interés
                   </label>
                   <select
@@ -265,11 +276,11 @@ export default function Contact() {
                       width: "100%",
                       padding: "0.75rem 0.95rem",
                       borderRadius: "10px",
-                      border: "1px solid rgba(184,149,42,0.22)",
+                      border: "1px solid rgba(9, 21, 35, 0.15)",
                       fontSize: "0.88rem",
                       outline: "none",
-                      background: "#091523",
-                      color: "#FFFFFF",
+                      background: "#FAF7F2",
+                      color: "var(--navy-deepest)",
                     }}
                   >
                     <option value="finanzas">Control Financiero & Caja</option>

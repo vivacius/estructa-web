@@ -153,12 +153,10 @@ export default function Hero() {
           asesoría legal, control financiero, estrategia directiva y optimización de procesos en un solo equipo.
         </p>
 
-        {/* Step 5: Focused Executive CTA Group */}
+        {/* Step 5: Focused Executive CTA */}
         <div
           style={{
             display: "flex",
-            gap: "1.25rem",
-            flexWrap: "wrap",
             justifyContent: "center",
             alignItems: "center",
             opacity: mounted ? 1 : 0,
@@ -167,15 +165,15 @@ export default function Hero() {
           }}
         >
           <a
-            href="#contacto"
+            href="#que-hacemos"
             className="btn btn-primary"
             onClick={(e) => {
               e.preventDefault();
-              document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" });
+              document.querySelector("#que-hacemos")?.scrollIntoView({ behavior: "smooth" });
             }}
             style={{
-              padding: "1rem 2.2rem",
-              fontSize: "0.98rem",
+              padding: "1rem 2.4rem",
+              fontSize: "1rem",
               fontWeight: 600,
               boxShadow: "0 10px 30px rgba(184,149,42,0.32)",
               display: "inline-flex",
@@ -183,29 +181,11 @@ export default function Hero() {
               gap: "0.6rem",
             }}
           >
-            Conversemos sobre tu empresa
+            Conoce nuestros servicios
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
-          </a>
-
-          <a
-            href="#que-hacemos"
-            className="btn btn-secondary"
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector("#que-hacemos")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            style={{
-              padding: "1rem 2rem",
-              fontSize: "0.98rem",
-              background: "rgba(255, 255, 255, 0.8)",
-              border: "1px solid rgba(184,149,42,0.35)",
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            Conoce nuestros servicios
           </a>
         </div>
 

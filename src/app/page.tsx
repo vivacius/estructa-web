@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import Hero from "@/sections/Hero";
 import Problems from "@/sections/Problems";
 import Perspectives from "@/sections/Perspectives";
@@ -41,6 +42,9 @@ export default function Home() {
       </main>
 
       <Footer />
+
+      {/* Floating Scroll to Top button */}
+      <ScrollToTop />
 
       {/* WhatsApp float */}
       <a

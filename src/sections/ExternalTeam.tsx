@@ -92,14 +92,6 @@ export default function ExternalTeam() {
                 "ESTRUCTA actúa como ese <span style={{ color: "var(--gold-mid)", fontStyle: "normal" }}>equipo consultor y directivo de cabecera.</span>"
               </p>
             </div>
-            <a
-              href="#contacto"
-              className="btn btn-primary"
-              onClick={(e) => { e.preventDefault(); document.querySelector("#contacto")?.scrollIntoView({ behavior: "smooth" }); }}
-            >
-              Conversemos sobre tu empresa
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
           </div>
 
           {/* Right: roles */}
