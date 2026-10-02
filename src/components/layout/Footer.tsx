@@ -15,8 +15,19 @@ export default function Footer() {
           marginBottom: "2.5rem",
         }}>
           <div>
-            <div style={{ background: "rgba(248,245,239,0.95)", borderRadius: "8px", padding: "8px 14px", display: "inline-block", marginBottom: "1rem" }}>
-              <Image src="/images/logo.png" alt="ESTRUCTA" width={160} height={48} style={{ height: "40px", width: "auto" }} />
+            <div style={{ marginBottom: "1.2rem" }}>
+              <Image
+                src="/images/logo.png"
+                alt="ESTRUCTA"
+                width={150}
+                height={45}
+                style={{
+                  height: "36px",
+                  width: "auto",
+                  filter: "brightness(0) invert(1)",
+                  display: "block",
+                }}
+              />
             </div>
             <p style={{ color: "var(--text-muted-dark)", fontSize: "0.875rem", lineHeight: 1.7, maxWidth: "280px" }}>
               Firma de soluciones empresariales integrales. Legal · Finanzas · Estrategia · Tecnología.

@@ -117,13 +117,6 @@ export default function Contact() {
             }}
           >
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-                <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 8px #22c55e" }} />
-                <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "var(--gold-primary)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                  Canal Directo
-                </span>
-              </div>
-
               <h3 style={{ fontSize: "1.35rem", fontWeight: 700, color: "var(--navy-deepest)", marginBottom: "0.6rem" }}>
                 Canal de consulta directa
               </h3>

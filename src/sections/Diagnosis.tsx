@@ -153,42 +153,6 @@ export default function Diagnosis() {
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         {/* Symmetrical Header */}
         <div style={{ textAlign: "center", maxWidth: "740px", margin: "0 auto 3rem" }}>
-          {/* Subtle live radar scanning pill */}
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.55rem",
-              background: "rgba(184, 149, 42, 0.12)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(184, 149, 42, 0.28)",
-              padding: "0.3rem 0.85rem",
-              borderRadius: "9999px",
-              marginBottom: "1rem",
-            }}
-          >
-            <span
-              style={{
-                width: "7px",
-                height: "7px",
-                borderRadius: "50%",
-                background: "var(--gold-mid)",
-                boxShadow: "0 0 10px var(--gold-mid)",
-                animation: "pulse 2s infinite",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--gold-deep)",
-              }}
-            >
-              Auditoría Preventiva Directa
-            </span>
-          </div>
 
           <h2
             className="text-display-md"
@@ -277,22 +241,9 @@ export default function Diagnosis() {
                   }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
-                      {isSelected && (
-                        <span
-                          style={{
-                            width: "6px",
-                            height: "6px",
-                            borderRadius: "50%",
-                            background: "var(--gold-mid)",
-                            boxShadow: "0 0 8px var(--gold-mid)",
-                          }}
-                        />
-                      )}
-                      <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#091523" }}>
-                        {track.name}
-                      </span>
-                    </div>
+                    <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#091523" }}>
+                      {track.name}
+                    </span>
 
                     <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--gold-deep)", minWidth: "32px", textAlign: "right" }}>
                       {score}%
