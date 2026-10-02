@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import DiagnosisCanvas from "@/components/canvas/DiagnosisCanvas";
 
 interface AuditTrack {
@@ -101,28 +100,10 @@ export default function Diagnosis() {
         position: "relative",
         overflow: "hidden",
         padding: "clamp(4.5rem, 6.5vw, 6rem) 0",
+        background: "radial-gradient(ellipse at 50% 25%, #0F2338 0%, #091523 60%, #060F1A 100%)",
         color: "var(--ivory)",
       }}
     >
-      {/* Background Image Texture (panel.png) with Sleek Luxury Overlay */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-        <Image
-          src="/images/panel.png"
-          alt="Panel de análisis diagnóstico"
-          fill
-          style={{ objectFit: "cover", objectPosition: "center 30%" }}
-          sizes="100vw"
-        />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(135deg, rgba(9,21,35,0.96) 0%, rgba(9,21,35,0.88) 50%, rgba(13,30,46,0.95) 100%)",
-          }}
-        />
-      </div>
-
       {/* Dynamic Diagnostic Scanning & Telemetry Canvas */}
       <DiagnosisCanvas />
 
