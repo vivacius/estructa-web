@@ -63,15 +63,15 @@ export default function Solutions() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
+        setVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
-  // Automatic gliding / auto-play carousel
+  // Automatic gliding / auto-play carousel only when viewing section
   useEffect(() => {
     if (isHovered || !visible) return;
     const interval = setInterval(() => {
@@ -80,13 +80,17 @@ export default function Solutions() {
     return () => clearInterval(interval);
   }, [isHovered, visible]);
 
-  // Smooth scroll sync whenever activeIdx changes
+  // Smooth scroll sync relative strictly to the track (NEVER scrolls page window)
   useEffect(() => {
-    if (trackRef.current) {
-      const card = trackRef.current.children[activeIdx] as HTMLElement;
-      if (card) {
-        card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-      }
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.children[activeIdx] as HTMLElement;
+    if (card) {
+      const trackWidth = track.clientWidth;
+      const cardLeft = card.offsetLeft;
+      const cardWidth = card.clientWidth;
+      const targetScrollLeft = cardLeft - (trackWidth - cardWidth) / 2;
+      track.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: "smooth" });
     }
   }, [activeIdx]);
 

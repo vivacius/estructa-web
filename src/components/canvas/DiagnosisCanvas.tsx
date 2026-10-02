@@ -14,8 +14,9 @@ export default function DiagnosisCanvas() {
     let width = 0;
     let height = 0;
     let angle = 0;
+    let time = 0;
 
-    const mouse = { x: -1000, y: -1000 };
+    const mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
 
     const handleResize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -30,13 +31,29 @@ export default function DiagnosisCanvas() {
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
     };
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
     handleResize();
+
+    // Load Logo for dynamic watermark animation
+    const logoImg = typeof window !== "undefined" ? new window.Image() : null;
+    let logoLoaded = false;
+    if (logoImg) {
+      logoImg.src = "/images/logo.png";
+      logoImg.onload = () => {
+        logoLoaded = true;
+      };
+    }
+
+    // Dynamic wandering & pivoting logo state
+    let logoX = (width || 1200) * 0.5;
+    let logoY = (height || 600) * 0.48;
+    let logoVx = 0.45;
+    let logoVy = 0.28;
 
     // Diagnostic telemetry nodes
     const nodeCount = 24;
@@ -54,25 +71,87 @@ export default function DiagnosisCanvas() {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+      time += 0.016;
+
+      // Mouse smooth interpolation
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
       const centerX = width * 0.5;
       const centerY = height * 0.5;
       const maxRadius = Math.min(width, height) * 0.48;
 
-      // 1. Concentric Diagnostic Coordinate Rings
+      // 1. DYNAMIC PIVOTING & BREATHING LOGO WATERMARK
+      if (logoLoaded && logoImg && logoImg.width > 0) {
+        ctx.save();
+
+        // Autonomous wandering movement across canvas
+        logoX += logoVx;
+        logoY += logoVy;
+
+        // Soft magnetic pull toward mouse
+        if (mouse.x > 0 && mouse.y > 0) {
+          const mdx = mouse.x - logoX;
+          const mdy = mouse.y - logoY;
+          logoX += mdx * 0.008;
+          logoY += mdy * 0.008;
+        }
+
+        // Breathing scale (crecer y decrecer)
+        const breathingScale = 1 + Math.sin(time * 1.1) * 0.13;
+
+        // Pivoting rotation oscillation
+        const pivotAngle = Math.sin(time * 0.8) * 0.08;
+
+        const baseTargetWidth = Math.min(width * 0.58, 650);
+        const targetWidth = baseTargetWidth * breathingScale;
+        const aspectRatio = logoImg.height / logoImg.width;
+        const targetHeight = targetWidth * aspectRatio;
+
+        // Bounds bounce
+        const padX = targetWidth * 0.35;
+        const padY = targetHeight * 0.4;
+        if (logoX < padX) {
+          logoX = padX;
+          logoVx = Math.abs(logoVx);
+        } else if (logoX > width - padX) {
+          logoX = width - padX;
+          logoVx = -Math.abs(logoVx);
+        }
+
+        if (logoY < padY) {
+          logoY = padY;
+          logoVy = Math.abs(logoVy);
+        } else if (logoY > height - padY) {
+          logoY = height - padY;
+          logoVy = -Math.abs(logoVy);
+        }
+
+        // Move to logo center, rotate to pivot, draw centered
+        ctx.translate(logoX, logoY);
+        ctx.rotate(pivotAngle);
+
+        // Watermark opacity tuned for dark navy background
+        ctx.globalAlpha = 0.12 + Math.sin(time * 1.1) * 0.035;
+        ctx.drawImage(logoImg, -targetWidth / 2, -targetHeight / 2, targetWidth, targetHeight);
+
+        ctx.restore();
+      }
+
+      // 2. Concentric Diagnostic Coordinate Rings
       const ringCount = 4;
       for (let r = 1; r <= ringCount; r++) {
         const radius = (maxRadius / ringCount) * r;
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(184, 149, 42, 0.07)";
+        ctx.strokeStyle = "rgba(184, 149, 42, 0.08)";
         ctx.lineWidth = 1;
         ctx.setLineDash([4, 6]);
         ctx.stroke();
         ctx.setLineDash([]);
       }
 
-      // 2. Fine Crosshair Axes
+      // 3. Fine Crosshair Axes
       ctx.beginPath();
       ctx.moveTo(centerX - maxRadius, centerY);
       ctx.lineTo(centerX + maxRadius, centerY);
@@ -82,7 +161,7 @@ export default function DiagnosisCanvas() {
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // 3. Subtle Rotating Radar Sweep
+      // 4. Subtle Rotating Radar Sweep
       angle += 0.008;
       const sweepGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius);
       sweepGradient.addColorStop(0, "rgba(184, 149, 42, 0.12)");
@@ -106,7 +185,7 @@ export default function DiagnosisCanvas() {
       ctx.stroke();
       ctx.restore();
 
-      // 4. Telemetry Metric Nodes & Constellation Links
+      // 5. Telemetry Metric Nodes & Constellation Links
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         n.pulse += n.speed;

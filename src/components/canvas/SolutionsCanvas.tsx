@@ -23,8 +23,9 @@ export default function SolutionsCanvas() {
     let animId: number;
     let width = 0;
     let height = 0;
+    let time = 0;
 
-    const mouse = { x: -1000, y: -1000 };
+    const mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
 
     const handleResize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -39,13 +40,29 @@ export default function SolutionsCanvas() {
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
     };
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
     handleResize();
+
+    // Load Logo for dynamic watermark animation
+    const logoImg = typeof window !== "undefined" ? new window.Image() : null;
+    let logoLoaded = false;
+    if (logoImg) {
+      logoImg.src = "/images/logo.png";
+      logoImg.onload = () => {
+        logoLoaded = true;
+      };
+    }
+
+    // Dynamic autonomous wandering and pivoting logo state
+    let logoX = (width || 1200) * 0.5;
+    let logoY = (height || 650) * 0.48;
+    let logoVx = 0.42;
+    let logoVy = 0.24;
 
     // 4 Fluid architectural solution ribbons tailored for LIGHT luxury background
     const ribbons: WaveRibbon[] = [
@@ -104,8 +121,70 @@ export default function SolutionsCanvas() {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+      time += 0.018;
 
-      // 1. Draw Flowing Harmonic Solution Ribbons
+      // Mouse smooth interpolation
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+      // 1. DYNAMIC PIVOTING & BREATHING LOGO WATERMARK
+      if (logoLoaded && logoImg && logoImg.width > 0) {
+        ctx.save();
+
+        // Autonomous wandering movement across canvas
+        logoX += logoVx;
+        logoY += logoVy;
+
+        // Soft magnetic pull toward mouse
+        if (mouse.x > 0 && mouse.y > 0) {
+          const mdx = mouse.x - logoX;
+          const mdy = mouse.y - logoY;
+          logoX += mdx * 0.008;
+          logoY += mdy * 0.008;
+        }
+
+        // Breathing scale (crecer / decrecer)
+        const breathingScale = 1 + Math.sin(time * 1.2) * 0.12;
+
+        // Pivoting rotation oscillation
+        const pivotAngle = Math.sin(time * 0.85) * 0.08;
+
+        const baseTargetWidth = Math.min(width * 0.55, 620);
+        const targetWidth = baseTargetWidth * breathingScale;
+        const aspectRatio = logoImg.height / logoImg.width;
+        const targetHeight = targetWidth * aspectRatio;
+
+        // Bounds bounce
+        const padX = targetWidth * 0.35;
+        const padY = targetHeight * 0.4;
+        if (logoX < padX) {
+          logoX = padX;
+          logoVx = Math.abs(logoVx);
+        } else if (logoX > width - padX) {
+          logoX = width - padX;
+          logoVx = -Math.abs(logoVx);
+        }
+
+        if (logoY < padY) {
+          logoY = padY;
+          logoVy = Math.abs(logoVy);
+        } else if (logoY > height - padY) {
+          logoY = height - padY;
+          logoVy = -Math.abs(logoVy);
+        }
+
+        // Move to logo center, rotate to pivot, draw centered
+        ctx.translate(logoX, logoY);
+        ctx.rotate(pivotAngle);
+
+        // Watermark opacity with gentle pulse
+        ctx.globalAlpha = 0.13 + Math.sin(time * 1.2) * 0.04;
+        ctx.drawImage(logoImg, -targetWidth / 2, -targetHeight / 2, targetWidth, targetHeight);
+
+        ctx.restore();
+      }
+
+      // 2. Draw Flowing Harmonic Solution Ribbons
       ribbons.forEach((ribbon) => {
         ribbon.phase += ribbon.speed;
         const baseY = height * ribbon.yRatio;
@@ -130,7 +209,7 @@ export default function SolutionsCanvas() {
         ctx.stroke();
       });
 
-      // 2. Animate and Render Solution Constellation Nodes & Connecting Threads
+      // 3. Animate and Render Solution Constellation Nodes & Connecting Threads
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         n.x += n.vx;
