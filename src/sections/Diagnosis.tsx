@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import DiagnosisCanvas from "@/components/canvas/DiagnosisCanvas";
 
 interface AuditTrack {
   id: string;
@@ -121,6 +122,9 @@ export default function Diagnosis() {
           }}
         />
       </div>
+
+      {/* Dynamic Diagnostic Scanning & Telemetry Canvas */}
+      <DiagnosisCanvas />
 
       {/* Top Edge Transition Line */}
       <div

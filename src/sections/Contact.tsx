@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import ContactCanvas from "@/components/canvas/ContactCanvas";
 
 export default function Contact() {
   const ref = useRef<HTMLElement>(null);
@@ -41,6 +42,9 @@ export default function Contact() {
     >
       {/* Crisp fine hairline border */}
       <div style={{ position: "absolute", top: 0, left: "5%", right: "5%", height: "1px", background: "rgba(184,149,42,0.22)" }} />
+
+      {/* Dynamic Warm Ambient Connection Network Canvas */}
+      <ContactCanvas />
 
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         {/* Symmetrical Header */}

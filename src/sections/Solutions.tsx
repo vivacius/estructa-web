@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import SolutionsCanvas from "@/components/canvas/SolutionsCanvas";
 
 const solutions = [
   {
@@ -75,6 +76,9 @@ export default function Solutions() {
     >
       {/* Clean 1px top border */}
       <div style={{ position: "absolute", top: 0, left: "5%", right: "5%", height: "1px", background: "rgba(184,149,42,0.22)" }} />
+
+      {/* Dynamic Symmetrical Solutions Architectural Canvas */}
+      <SolutionsCanvas />
 
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         {/* Symmetrical High-Contrast Header */}
