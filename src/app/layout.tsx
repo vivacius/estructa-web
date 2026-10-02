@@ -7,8 +7,16 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ? process.env.NEXT_PUBLIC_SITE_URL
+  : process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "https://estructa.com";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://estructa.com"),
+  metadataBase: new URL(baseUrl),
   title: "ESTRUCTA · Soluciones Empresariales — Legal, Finanzas, Estrategia, Tecnología",
   description:
     "Firma de soluciones empresariales integrales. Ayudamos a pymes a organizarse, entender sus números, reducir riesgos, mejorar procesos y usar datos para tomar mejores decisiones. Legal · Finanzas · Estrategia · Tecnología.",
@@ -27,17 +35,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_CO",
-    url: "https://estructa.com",
+    url: baseUrl,
     siteName: "ESTRUCTA · Soluciones Empresariales",
     title: "ESTRUCTA · Construimos empresas más sólidas",
     description:
       "Integramos Legal, Finanzas, Estrategia y Tecnología sobre el mismo negocio. Diagnóstico 360°, soluciones concretas y acompañamiento continuo.",
     images: [
       {
-        url: "/images/horizonte.png",
+        url: "/images/og-estructa.png",
         width: 1200,
         height: 630,
         alt: "ESTRUCTA · Soluciones Empresariales",
+        type: "image/png",
+      },
+      {
+        url: "/images/og-square.png",
+        width: 600,
+        height: 600,
+        alt: "ESTRUCTA Logo",
+        type: "image/png",
       },
     ],
   },
@@ -46,6 +62,7 @@ export const metadata: Metadata = {
     title: "ESTRUCTA · Construimos empresas más sólidas",
     description:
       "Legal · Finanzas · Estrategia · Tecnología trabajando sobre el mismo negocio.",
+    images: ["/images/og-estructa.png"],
   },
   robots: {
     index: true,
@@ -53,7 +70,13 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/images/og-square.png", sizes: "600x600", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
