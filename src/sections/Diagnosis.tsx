@@ -201,7 +201,7 @@ export default function Diagnosis() {
               border: "1.5px solid rgba(184, 149, 42, 0.22)",
               boxShadow: "0 16px 44px rgba(13, 30, 46, 0.05)",
               borderRadius: "20px",
-              padding: "1.4rem 1.6rem",
+              padding: "clamp(1.1rem, 3.5vw, 1.4rem) clamp(1rem, 3.5vw, 1.6rem)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -278,7 +278,7 @@ export default function Diagnosis() {
               border: "1.5px solid rgba(184, 149, 42, 0.28)",
               boxShadow: "0 20px 48px rgba(13, 30, 46, 0.07)",
               borderRadius: "20px",
-              padding: "1.85rem",
+              padding: "clamp(1.25rem, 4vw, 1.85rem)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -336,7 +336,7 @@ export default function Diagnosis() {
               </div>
             </div>
 
-            <div style={{ marginTop: "1.25rem", paddingTop: "0.9rem", borderTop: "1px solid rgba(184, 149, 42, 0.15)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ marginTop: "1.25rem", paddingTop: "0.9rem", borderTop: "1px solid rgba(184, 149, 42, 0.15)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
               <span style={{ fontSize: "0.8rem", color: "rgba(9, 21, 35, 0.55)" }}>
                 Confidencialidad empresarial garantizada
               </span>
@@ -353,9 +353,10 @@ export default function Diagnosis() {
           0%, 100% { transform: scale(1); opacity: 1; }
           50% { transform: scale(1.4); opacity: 0.6; }
         }
-        @media (max-width: 820px) {
+        @media (max-width: 860px) {
           .diagnosis-grid {
             grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
           }
         }
       `}</style>

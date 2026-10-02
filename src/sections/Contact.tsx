@@ -109,7 +109,7 @@ export default function Contact() {
               border: "1.5px solid rgba(184, 149, 42, 0.25)",
               borderLeft: "4px solid var(--gold-mid)",
               borderRadius: "20px",
-              padding: "2.5rem 2.25rem",
+              padding: "clamp(1.5rem, 5vw, 2.5rem) clamp(1.2rem, 4vw, 2.25rem)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -178,7 +178,7 @@ export default function Contact() {
               WebkitBackdropFilter: "blur(22px)",
               border: "1.5px solid rgba(184, 149, 42, 0.25)",
               borderRadius: "20px",
-              padding: "2.5rem 2.25rem",
+              padding: "clamp(1.5rem, 5vw, 2.5rem) clamp(1.2rem, 4vw, 2.25rem)",
               boxShadow: "0 18px 48px rgba(9, 21, 35, 0.06)",
               display: "flex",
               flexDirection: "column",
@@ -199,7 +199,7 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div className="contact-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                   <div>
                     <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", color: "var(--navy-deepest)", marginBottom: "0.35rem", letterSpacing: "0.06em" }}>
                       Nombre *
@@ -318,8 +318,14 @@ export default function Contact() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
           .contact-symmetric-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.75rem !important;
+          }
+        }
+        @media (max-width: 540px) {
+          .contact-form-row {
             grid-template-columns: 1fr !important;
           }
         }

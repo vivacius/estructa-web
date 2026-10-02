@@ -254,8 +254,8 @@ export default function Solutions() {
                 key={sol.title}
                 onClick={() => setActiveIdx(i)}
                 style={{
-                  flex: "0 0 360px",
-                  maxWidth: "360px",
+                  flex: "0 0 min(360px, 86vw)",
+                  maxWidth: "min(360px, 86vw)",
                   scrollSnapAlign: "center",
                   background: isCurrent ? "rgba(255, 255, 255, 0.58)" : "rgba(255, 255, 255, 0.32)",
                   backdropFilter: "blur(22px)",
@@ -265,7 +265,7 @@ export default function Solutions() {
                     ? "0 24px 52px rgba(184, 149, 42, 0.22), 0 6px 18px rgba(9, 21, 35, 0.06)"
                     : "0 10px 30px rgba(9, 21, 35, 0.04)",
                   borderRadius: "20px",
-                  padding: "2rem 1.75rem",
+                  padding: "clamp(1.5rem, 4vw, 2rem) clamp(1.2rem, 3.5vw, 1.75rem)",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
